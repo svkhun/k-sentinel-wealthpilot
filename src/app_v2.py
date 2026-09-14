@@ -28,33 +28,59 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount Frontend Static Assets
-if os.path.exists(FRONTEND_DIR):
+REACT_DIST_DIR = os.path.join(FRONTEND_DIR, "react-app", "dist")
+
+# Mount React Built Assets
+if os.path.exists(os.path.join(REACT_DIST_DIR, "assets")):
+    app.mount("/assets", StaticFiles(directory=os.path.join(REACT_DIST_DIR, "assets")), name="assets")
+
+# Mount Frontend Static Assets (prefer REACT_DIST_DIR/static, fallback to FRONTEND_DIR)
+if os.path.exists(os.path.join(REACT_DIST_DIR, "static")):
+    app.mount("/static", StaticFiles(directory=os.path.join(REACT_DIST_DIR, "static")), name="static")
+elif os.path.exists(FRONTEND_DIR):
     app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 # ==============================================================================
-# FRONTEND HTML ROUTES (Intuitive Semantic URLs)
+# FRONTEND SPA & HTML ROUTES (React Router 6 Multi-Page Navigation)
 # ==============================================================================
-@app.get("/", response_class=FileResponse)
-@app.get("/home", response_class=FileResponse)
-@app.get("/landing", response_class=FileResponse)
-def serve_home_page():
+def get_spa_or_landing_response():
+    react_index = os.path.join(REACT_DIST_DIR, "index.html")
+    if os.path.exists(react_index):
+        return FileResponse(react_index)
     landing_path = os.path.join(FRONTEND_DIR, "landing.html")
     if os.path.exists(landing_path):
         return FileResponse(landing_path)
-    return {"status": "Home page not found", "path": landing_path}
+    return {"status": "Frontend not found"}
 
+@app.get("/", response_class=FileResponse)
+@app.get("/home", response_class=FileResponse)
+@app.get("/landing", response_class=FileResponse)
+@app.get("/wealthpilot", response_class=FileResponse)
+@app.get("/sentinel", response_class=FileResponse)
+@app.get("/architecture", response_class=FileResponse)
+@app.get("/personas", response_class=FileResponse)
 @app.get("/app", response_class=FileResponse)
 @app.get("/dashboard", response_class=FileResponse)
 @app.get("/simulation", response_class=FileResponse)
-def serve_app_page():
-    index_path = os.path.join(FRONTEND_DIR, "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
-    return {"status": "App dashboard not found", "path": index_path}
+@app.get("/simulator", response_class=FileResponse)
+def serve_spa():
+    return get_spa_or_landing_response()
+
+@app.get("/simulator.html", response_class=FileResponse)
+def serve_simulator_page():
+    dist_sim = os.path.join(REACT_DIST_DIR, "simulator.html")
+    if os.path.exists(dist_sim):
+        return FileResponse(dist_sim)
+    idx = os.path.join(FRONTEND_DIR, "index.html")
+    if os.path.exists(idx):
+        return FileResponse(idx)
+    return {"status": "Simulator not found"}
 
 @app.get("/favicon.ico", include_in_schema=False)
 def serve_favicon():
+    favicon_dist = os.path.join(REACT_DIST_DIR, "favicon.ico")
+    if os.path.exists(favicon_dist):
+        return FileResponse(favicon_dist)
     favicon_svg = os.path.join(FRONTEND_DIR, "img", "favicon.svg")
     if os.path.exists(favicon_svg):
         return FileResponse(favicon_svg, media_type="image/svg+xml")

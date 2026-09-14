@@ -25,6 +25,7 @@ scratch/
 
 # Node / Frontend dependencies & build artifacts
 node_modules/
-dist/
 .vite/
 .eslintcache
+!/frontend/react-app/dist/
+!/frontend/react-app/dist/**

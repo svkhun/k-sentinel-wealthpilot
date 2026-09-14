@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Sentinel & WealthPilot | K PLUS Enterprise Platform</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/static/img/favicon.svg">
+  
+  <!-- Google Fonts: IBM Plex Sans Thai, Plus Jakarta Sans, Prompt, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            kplus: {
+              DEFAULT: '#00A950',
+              hover: '#008F43',
+              dark: '#00602E',
+              forest: '#004220',
+              glow: 'rgba(0, 169, 80, 0.28)'
+            }
+          },
+          fontFamily: {
+            sans: ['"IBM Plex Sans Thai"', 'Prompt', 'Plus Jakarta Sans', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Vis.js Network CDN -->
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-[#080C14] text-slate-100 min-h-screen md:h-screen md:overflow-hidden flex flex-col md:flex-row font-sans selection:bg-emerald-500 selection:text-white">
+
+  <!-- ============================================================================== -->
+  <!-- [NAV] LEFT SIDEBAR NAVIGATOR BAR (Collapsible, Sleek & Uncluttered)             -->
+  <!-- ============================================================================== -->
+  <aside id="sidebar-nav" class="w-full md:w-72 lg:w-80 bg-[#0A0F1D]/95 backdrop-blur-2xl border-r border-white/[0.08] flex flex-col shrink-0 md:h-screen md:sticky md:top-0 z-40 overflow-y-auto p-4 space-y-4">
+    
+    <!-- Brand Header with Collapse Button -->
+    <div class="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+      <a href="/" title="กลับสู่หน้าหลัก (Home Overview)" class="flex items-center gap-2.5 min-w-0 hover:opacity-90 transition-opacity">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#006837] via-[#00A950] to-[#22C55E] flex items-center justify-center text-white shadow-md shadow-emerald-500/30 border border-white/20 shrink-0 relative overflow-hidden group">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 5V11C4 16.52 7.41 21.61 12 23C16.59 21.61 20 16.52 20 11V5L12 2Z" fill="url(#brand-shield-glow-nav)" stroke="#A7F3D0" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M9 11.5L11 13.5L15.5 9" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="18" r="1.2" fill="#34D399"/>
+            <defs>
+              <linearGradient id="brand-shield-glow-nav" x1="4" y1="2" x2="20" y2="23" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#047857"/>
+                <stop offset="1" stop-color="#10B981"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5">
+            <span class="font-extrabold text-sm text-white tracking-tight">K-Sentinel</span>
+            <span class="text-xs text-slate-400 font-light">&amp;</span>
+            <span class="font-extrabold text-sm text-emerald-400 tracking-tight">Pilot</span>
+            <span class="bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-[9px] px-1.5 py-0.5 rounded font-bold">K+</span>
+          </div>
+          <p class="text-[10px] text-slate-400 truncate">KBTG Hackathon 2026 — Track 2</p>
+        </div>
+      </a>
+      
+      <!-- Collapse Sidebar Button -->
+      <button onclick="toggleSidebar()" id="btn-sidebar-collapse" title="ซ่อนแถบเมนู [B] (Hide Sidebar)" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-transparent hover:border-emerald-500/30 flex items-center justify-center transition-all duration-200 shrink-0 group">
+        <i data-lucide="panel-left-close" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200"></i>
+      </button>
+    </div>
+
+    <!-- 1. Navigation Menu (4 Single-Line Sleek Tabs) -->
+    <div class="space-y-1">
+      <div class="text-[9px] uppercase font-bold tracking-wider text-slate-500 px-1">เมนูหลัก (NAV)</div>
+      <nav class="space-y-1">
+        <button onclick="switchView('mobile')" id="nav-btn-mobile" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2.5 bg-emerald-600 text-white shadow-sm shadow-emerald-600/25">
+          <i data-lucide="smartphone" class="w-4 h-4 shrink-0"></i>
+          <span class="truncate">1. ลูกค้า (K PLUS)</span>
+        </button>
+        <button onclick="switchView('secops')" id="nav-btn-secops" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:text-white transition-all flex items-center gap-2.5 hover:bg-white/[0.06]">
+          <i data-lucide="shield-alert" class="w-4 h-4 shrink-0"></i>
+          <span class="truncate">2. บัญชีม้า (SecOps)</span>
+        </button>
+        <button onclick="switchView('casa')" id="nav-btn-casa" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:text-white transition-all flex items-center gap-2.5 hover:bg-white/[0.06]">
+          <i data-lucide="trending-up" class="w-4 h-4 shrink-0"></i>
+          <span class="truncate">3. ธุรกิจ &amp; SLA</span>
+        </button>
+        <a href="/" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all flex items-center justify-between border border-transparent hover:border-white/10 group" title="กลับสู่หน้าหลัก (Home Overview)">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="home" class="w-4 h-4 text-emerald-400 shrink-0 group-hover:scale-110 transition-transform"></i>
+            <span class="truncate">หน้าหลัก (Home Overview)</span>
+          </div>
+          <span class="text-[9px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/30">Home</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- 2. Quick Interactive Scenarios (Clean Modern Scenario Cards) -->
+    <div class="space-y-2 pt-2.5 border-t border-white/[0.08]">
+      <div class="flex items-center justify-between px-1">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>จำลองเหตุการณ์ (1 คลิก)</span>
+        </span>
+        <span class="text-[9px] text-slate-400 font-mono bg-white/[0.06] px-1.5 py-0.5 rounded">Quick Test</span>
+      </div>
+
+      <div class="space-y-2">
+        <!-- Scenario 1: Safe Transfer -->
+        <button onclick="runScenario(1)" id="btn-scenario-1" class="w-full p-2.5 rounded-xl bg-[#141E33]/90 hover:bg-[#1A2640] border border-white/[0.08] hover:border-emerald-500/50 text-left transition-all duration-200 group relative overflow-hidden">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30 group-hover:scale-105 transition-transform">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors flex items-center gap-1.5">
+                  <span>1. โอนเงินปกติ</span>
+                  <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-1 py-0.2 rounded border border-white/10">[1]</span>
+                </span>
+                <span class="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.5 rounded">4.2ms</span>
+              </div>
+              <p class="text-[10px] text-slate-400 truncate mt-0.5">โอน ฿650 ให้เพื่อน • ผ่านทันที</p>
+            </div>
+          </div>
+          <div id="scenario-indicator-1" class="hidden absolute left-0 top-0 bottom-0 w-1 bg-emerald-400"></div>
+        </button>
+
+        <!-- Scenario 2: Mule Scam Attack -->
+        <button onclick="runScenario(2)" id="btn-scenario-2" class="w-full p-2.5 rounded-xl bg-[#141E33]/90 hover:bg-[#1A2640] border border-white/[0.08] hover:border-rose-500/50 text-left transition-all duration-200 group relative overflow-hidden">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 border border-rose-500/30 group-hover:scale-105 transition-transform">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-rose-400 animate-pulse"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-white group-hover:text-rose-300 transition-colors flex items-center gap-1.5">
+                  <span>2. สกัดกั้นบัญชีม้า</span>
+                  <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-1 py-0.2 rounded border border-white/10">[2]</span>
+                </span>
+                <span class="text-[9px] font-mono font-bold text-rose-400 bg-rose-500/15 border border-rose-500/30 px-1.5 py-0.5 rounded">Alert</span>
+              </div>
+              <p class="text-[10px] text-slate-400 truncate mt-0.5">โอน ฿35k เข้าม้า AOC • เปิดเกราะระงับ</p>
+            </div>
+          </div>
+          <div id="scenario-indicator-2" class="hidden absolute left-0 top-0 bottom-0 w-1 bg-rose-400"></div>
+        </button>
+
+        <!-- Scenario 3: Micro-Sweep -->
+        <button onclick="runScenario(3)" id="btn-scenario-3" class="w-full p-2.5 rounded-xl bg-[#141E33]/90 hover:bg-[#1A2640] border border-white/[0.08] hover:border-sky-500/50 text-left transition-all duration-200 group relative overflow-hidden">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/30 group-hover:scale-105 transition-transform">
+              <i data-lucide="sparkles" class="w-4 h-4 text-sky-400"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-white group-hover:text-sky-300 transition-colors flex items-center gap-1.5">
+                  <span>3. กวาดเงินออม AI</span>
+                  <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-1 py-0.2 rounded border border-white/10">[3]</span>
+                </span>
+                <span class="text-[9px] font-mono font-bold text-sky-400 bg-sky-500/15 border border-sky-500/30 px-1.5 py-0.5 rounded">1.50%</span>
+              </div>
+              <p class="text-[10px] text-slate-400 truncate mt-0.5">กวาดส่วนเกินเข้า Vault อัตโนมัติ</p>
+            </div>
+          </div>
+          <div id="scenario-indicator-3" class="hidden absolute left-0 top-0 bottom-0 w-1 bg-sky-400"></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. Persona Selector (Single-Line Compact) -->
+    <div class="space-y-1.5 pt-2 border-t border-white/[0.08]">
+      <div class="flex items-center justify-between text-[10px] font-semibold text-slate-400 px-1">
+        <span>โปรไฟล์จำลอง (Persona)</span>
+      </div>
+      <select id="user-selector" onchange="onUserSelectChange(this.value)" class="w-full bg-[#141E33] border border-white/[0.1] text-white text-xs rounded-xl px-2.5 py-1.5 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all cursor-pointer">
+        <!-- Dynamic via JS -->
+      </select>
+      <div id="persona-summary-badge" class="flex items-center gap-2 bg-[#0E1524] px-2.5 py-1.5 rounded-xl border border-white/[0.06] text-[10px]">
+        <div id="persona-indicator" class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></div>
+        <div id="persona-title" class="font-bold text-white truncate">Paycheck-to-Paycheck Spender</div>
+        <div id="persona-desc" class="hidden"></div>
+      </div>
+    </div>
+
+    <!-- 4. Footer Utilities & Reset -->
+    <div class="pt-2.5 border-t border-white/[0.08] space-y-2 mt-auto">
+      <button onclick="resetAccountState()" title="รีเซ็ตยอดเงินและข้อมูลบัญชีกลับเป็นค่าเริ่มต้น" class="w-full py-2 px-3 rounded-xl bg-[#141E33] hover:bg-[#1C2942] border border-white/[0.1] text-xs font-bold text-slate-200 hover:text-emerald-400 flex items-center justify-center gap-2 transition-all shadow-sm">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-emerald-400"></i>
+        <span>รีเซ็ตข้อมูล (Reset)</span>
+      </button>
+
+      <div class="flex items-center justify-between px-1">
+        <button onclick="toggleAudioHaptics()" id="audio-toggle-btn" title="เปิด/ปิดเสียงเอฟเฟกต์" class="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-white transition-colors">
+          <i data-lucide="volume-2" id="audio-icon" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>เสียง</span>
+        </button>
+        <div class="flex items-center gap-1 text-[10px] text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-500/30 font-medium">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>AI Online (&lt;80ms)</span>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ============================================================================== -->
+  <!-- [MAIN] MAIN CONTENT WORKSPACE (Roomy, Clean Margins & Proportional Grid)       -->
+  <!-- ============================================================================== -->
+  <main class="flex-1 min-w-0 flex flex-col h-full md:h-screen overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 relative">
+
+    <!-- Universal Floating Expand Sidebar Button (Always visible across all tabs when sidebar is collapsed) -->
+    <button onclick="toggleSidebar()" id="btn-sidebar-expand" title="แสดงแถบเมนู [B] (Show Sidebar)" class="hidden fixed top-3.5 left-4 z-50 items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#0A0F1D]/95 backdrop-blur-xl border border-emerald-500/50 text-xs font-semibold text-white shadow-2xl hover:bg-[#141E33] hover:border-emerald-400 transition-all group">
+      <div class="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 group-hover:scale-110 transition-transform">
+        <i data-lucide="panel-left-open" class="w-3.5 h-3.5"></i>
+      </div>
+      <span>แสดงแถบเมนู</span>
+      <span class="text-[9px] font-mono text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded border border-emerald-500/30 font-bold">[B]</span>
+    </button>
+
+    <!-- ============================================================================ -->
+    <!-- VIEW 1: K PLUS CUSTOMER EXPERIENCE                                           -->
+    <!-- ============================================================================ -->
+    <section id="view-mobile" class="transition-opacity duration-300 space-y-6">
+      
+      <!-- Clean Section Sub-Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0E1524]/60 p-4 rounded-2xl border border-white/[0.06]">
+        <div class="flex items-center gap-3">
+
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+            <i data-lucide="smartphone" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-white">ระบบจำลองการใช้งานแอป K PLUS และ AI Copilot สำหรับ First Jobbers</h2>
+            <p class="text-xs text-slate-400">ทดลองโอนเงิน หรือคลิกสถานการณ์ทางซ้ายมือเพื่อดูการทำงานของเกราะตรวจจับบัญชีม้า</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-slate-300 shrink-0">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="font-mono text-emerald-400">Sub-80ms Engine Ready</span>
+        </div>
+      </div>
+
+      <!-- MAIN 2-COLUMN VIEW: Phone on Left, Simple Explanations on Right -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- COLUMN 1: Realistic iPhone 16 Pro Viewport -->
+        <div class="lg:col-span-5 flex flex-col items-center">
+          
+          <div class="w-full max-w-[392px] mb-2.5 flex items-center justify-between px-2">
+            <span class="text-xs text-slate-400 font-medium flex items-center gap-1.5">
+              <i data-lucide="smartphone" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>หน้าจอจำลองแอป K PLUS</span>
+            </span>
+            <button onclick="resetAccountState()" title="รีเซ็ตยอดเงินและข้อมูลบัญชีกลับเป็นค่าเริ่มต้น" class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#141E33] hover:bg-[#1C2942] border border-white/[0.1] text-xs font-semibold text-slate-200 hover:text-emerald-400 transition-all shadow-sm">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>รีเซ็ตข้อมูล</span>
+            </button>
+          </div>
+
+          <div class="iphone-frame relative">
+            
+            <!-- Real-Time Radar Screen Sweep (Shown during pre-screening) -->
+            <div id="phone-radar-sweep" class="hidden screen-radar-sweep"></div>
+
+            <!-- Dynamic Island Pill (Interactive & Spring-Morphing) -->
+            <div id="main-dynamic-island" class="dynamic-island" onclick="toggleDynamicIslandDetails()" title="คลิกเพื่อดูสถานะความปลอดภัยแบบ Real-time">
+              <!-- Compact View -->
+              <div id="island-compact-view" class="flex items-center justify-between w-full">
+                <div class="sensor-indicator">
+                  <i data-lucide="shield" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  <span class="text-[10px] text-emerald-400 font-mono font-bold tracking-tight">K-SHIELD</span>
+                </div>
+                <div class="camera-dot"></div>
+                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+              </div>
+              <!-- Expanded Morph View -->
+              <div id="island-expanded-view" class="hidden items-center justify-between w-full h-full px-1">
+                <div class="flex items-center gap-2">
+                  <div class="flex items-center gap-0.5 h-4">
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                  </div>
+                  <span id="island-title" class="text-[11px] font-bold text-white tracking-tight">K-Sentinel Shield Active</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span id="island-badge" class="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/20 border border-emerald-500/30 px-2 py-0.5 rounded-full">&lt; 80ms</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- iPhone Status Bar -->
+            <div class="flex justify-between items-center px-7 pt-1 pb-3 text-xs text-slate-300 font-medium">
+              <span id="mobile-live-clock" class="font-semibold tracking-tight">09:41</span>
+              <div class="flex items-center gap-2 text-slate-400">
+                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 rounded">5G</span>
+                <i data-lucide="wifi" class="w-3.5 h-3.5 text-slate-300"></i>
+                <div class="flex items-center gap-0.5">
+                  <span class="text-[10px] font-mono text-slate-300">98%</span>
+                  <i data-lucide="battery-charging" class="w-4 h-4 text-emerald-400"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Inside Mobile Content Area -->
+            <div class="px-5 py-3 space-y-4">
+              
+              <!-- App Top Profile Bar with Eye Toggle and Reset Button -->
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-600 to-green-500 flex items-center justify-center font-bold text-xs text-white shadow-md shadow-emerald-500/20 border border-white/20">
+                    KP
+                  </div>
+                  <div>
+                    <div class="text-[11px] text-slate-400">สวัสดี, บัญชีผู้ใช้งาน</div>
+                    <div id="user-display-name" class="text-sm font-bold text-white">First Jobber • ACC_0100</div>
+                  </div>
+                </div>
+                
+                <div class="flex items-center gap-1.5">
+                  <button onclick="resetAccountState()" title="รีเซ็ตยอดเงินและข้อมูลเริ่มต้น (Reset Data)" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-slate-700 flex items-center justify-center text-slate-300 hover:text-emerald-400 transition-all">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button onclick="toggleBalanceVisibility()" title="ซ่อน/แสดงยอดเงินคงเหลือ" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-slate-700 flex items-center justify-center text-slate-300 hover:text-white transition-all">
+                    <i data-lucide="eye" id="eye-icon" class="w-4 h-4"></i>
+                  </button>
+                  <div class="relative">
+                    <div class="w-8 h-8 rounded-full bg-slate-800/80 flex items-center justify-center text-slate-300">
+                      <i data-lucide="bell" class="w-4 h-4"></i>
+                    </div>
+                    <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#0B0F19]"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Authentic K-eSavings Digital Card (with 3D Parallax & Holographic Glint) -->
+              <div class="card-3d-wrap">
+                <div class="kplus-card relative" id="interactive-kplus-card">
+                  <!-- Holographic Glint Light Reflection -->
+                  <div class="card-glint" id="card-glint-reflection"></div>
+
+                  <div class="flex justify-between items-start relative z-10">
+                    <div>
+                      <span class="text-xs font-semibold tracking-wide text-white/90">K-eSavings Digital</span>
+                      <div class="text-[10px] text-white/70 font-mono mt-0.5">PromptPay Linked</div>
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-black/25 backdrop-blur-sm px-2 py-0.5 rounded-md border border-white/15">
+                      <span class="font-extrabold tracking-widest text-xs">K PLUS</span>
+                    </div>
+                  </div>
+
+                  <!-- EMV Chip & Contactless Waves -->
+                  <div class="mt-4 flex items-center justify-between relative z-10">
+                    <div class="emv-chip"></div>
+                    <i data-lucide="rss" class="w-5 h-5 text-white/70 rotate-90"></i>
+                  </div>
+
+                  <!-- Account Number & Balance -->
+                  <div class="mt-3 relative z-10">
+                    <div class="flex items-center justify-between text-xs text-white/80 font-mono">
+                      <span id="card-acc-num">ACC_0100 •••• 4291</span>
+                      <button onclick="copyAccNumber()" class="hover:text-white transition-colors" title="คัดลอกเลขบัญชี">
+                        <i data-lucide="copy" class="w-3 h-3"></i>
+                      </button>
+                    </div>
+                    <div class="mt-1 text-2xl font-black tracking-tight" id="card-main-balance">฿ 24,500.00</div>
+                  </div>
+
+                  <!-- Monthly Salary Footer -->
+                  <div class="mt-3 flex justify-between items-center text-[11px] text-white/85 border-t border-white/15 pt-2 font-medium relative z-10">
+                    <span>เงินเดือน: <b id="card-monthly-salary">฿ 28,000.00</b></span>
+                    <span class="bg-white/15 px-2 py-0.5 rounded-full text-[10px]">รอบเงินเดือน: 28</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- K PLUS Quick Actions Bar -->
+              <div class="grid grid-cols-4 gap-2 pt-1 pb-1">
+                <div class="kplus-action-btn" onclick="switchMobileTab('transfer')">
+                  <div class="kplus-action-icon">
+                    <i data-lucide="arrow-up-right" class="w-5 h-5 text-emerald-400"></i>
+                  </div>
+                  <span class="text-[10px] font-medium text-slate-300">โอนเงิน</span>
+                </div>
+                <div class="kplus-action-btn" onclick="triggerMicroSweep()">
+                  <div class="kplus-action-icon">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-amber-400"></i>
+                  </div>
+                  <span class="text-[10px] font-medium text-slate-300">กวาดออม</span>
+                </div>
+                <div class="kplus-action-btn" onclick="promptVaultWithdrawal()">
+                  <div class="kplus-action-icon">
+                    <i data-lucide="lock" class="w-5 h-5 text-sky-400"></i>
+                  </div>
+                  <span class="text-[10px] font-medium text-slate-300">ถอน Vault</span>
+                </div>
+                <div class="kplus-action-btn" onclick="showFeatureAlert('QR Scan')">
+                  <div class="kplus-action-icon">
+                    <i data-lucide="qr-code" class="w-5 h-5 text-slate-300"></i>
+                  </div>
+                  <span class="text-[10px] font-medium text-slate-300">สแกน</span>
+                </div>
+              </div>
+
+              <!-- In-Mobile Sub Navigation Tabs -->
+              <div class="flex bg-[#141E33] p-1 rounded-xl border border-white/[0.08] text-xs font-semibold">
+                <button onclick="switchMobileTab('sts')" id="m-tab-btn-sts" class="flex-1 py-2 text-center rounded-lg bg-emerald-600 text-white transition-all shadow-sm">
+                  Safe-to-Spend &amp; Vault
+                </button>
+                <button onclick="switchMobileTab('transfer')" id="m-tab-btn-transfer" class="flex-1 py-2 text-center rounded-lg text-slate-400 hover:text-white transition-all">
+                  โอนเงิน (Shield Test)
+                </button>
+              </div>
+
+              <!-- SUB-TAB 1: Safe-to-Spend & Micro-Vault -->
+              <div id="mobile-tab-sts" class="space-y-3.5">
+                
+                <!-- Safe-to-Spend Daily Gauge Card -->
+                <div class="bg-[#141E33]/90 p-4 rounded-2xl border border-white/[0.08] relative overflow-hidden">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">เงินที่ใช้ได้สบายใจวันนี้ (Safe-to-Spend)</span>
+                      <div class="text-2xl font-black text-emerald-400 mt-0.5 font-mono" id="sts-daily-limit">฿ 671.14</div>
+                    </div>
+                    <div class="bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider" id="sts-status-badge">
+                      ON TRACK
+                    </div>
+                  </div>
+
+                  <!-- Mini Burn-rate Bar -->
+                  <div class="mt-3">
+                    <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                      <span>ใช้ไปแล้ววันนี้: <b class="text-white" id="sts-spent-today">฿ 306.71</b></span>
+                      <span>อัตราผลาญ: <b class="text-emerald-400" id="sts-burn-rate-text">45%</b></span>
+                    </div>
+                    <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                      <div id="sts-burn-rate-bar" class="bg-gradient-to-r from-emerald-500 to-green-400 h-full rounded-full transition-all duration-500" style="width: 45%;"></div>
+                    </div>
+                  </div>
+
+                  <div class="mt-2.5 pt-2 border-t border-white/[0.06] flex items-center justify-between text-[10px] text-slate-400">
+                    <span>ใช้ได้อีก: <b class="text-emerald-400 font-mono" id="sts-safe-remaining">฿ 364.43</b></span>
+                    <span>รีเซ็ตทุกเที่ยงคืน</span>
+                  </div>
+                </div>
+
+                <!-- Protected Vault (e-Savings Isolation) -->
+                <div class="bg-[#141E33]/90 p-4 rounded-2xl border border-white/[0.08]">
+                  <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-2">
+                      <div class="w-7 h-7 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center">
+                        <i data-lucide="lock" class="w-4 h-4"></i>
+                      </div>
+                      <div>
+                        <div class="text-xs font-bold text-white">Protected Vault (ตู้เซฟดิจิทัล)</div>
+                        <div class="text-[10px] text-slate-400">เงินออมดอกเบี้ยสูง 1.50% แยกจากกระเป๋าหลัก</div>
+                      </div>
+                    </div>
+                    <span class="text-[10px] font-bold text-teal-400 bg-teal-500/15 px-2 py-0.5 rounded-full border border-teal-500/30">
+                      1.50% p.a.
+                    </span>
+                  </div>
+
+                  <div class="mt-3 flex items-center justify-between">
+                    <div>
+                      <div class="text-[10px] text-slate-400">ยอดเงินเก็บในเซฟ</div>
+                      <div class="text-xl font-black text-white font-mono" id="disp-vault-balance">฿ 15,240.00</div>
+                    </div>
+                    <button onclick="triggerMicroSweep()" class="px-3 py-1.5 rounded-xl bg-teal-600/30 hover:bg-teal-600/40 border border-teal-500/40 text-teal-300 text-xs font-semibold flex items-center gap-1.5 transition-all">
+                      <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                      <span>กวาดออมเศษเงิน</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- SUB-TAB 2: Transfer Flow (Shield Test) -->
+              <div id="mobile-tab-transfer" class="space-y-3.5 hidden">
+                <div class="text-xs text-slate-400 font-medium">ทดลองโอนเงินเพื่อดูระบบตรวจจับของ AI (&lt; 80ms)</div>
+
+                <!-- Recipient Selection Cards -->
+                <div class="space-y-1.5">
+                  <label class="text-[11px] text-slate-300 font-semibold block">เลือกบัญชีปลายทาง:</label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button onclick="selectRecipientPreset('safe')" id="btn-rcp-safe" class="p-2.5 rounded-xl border border-emerald-500/60 bg-emerald-950/40 text-left transition-all">
+                      <div class="flex items-center gap-1.5 text-emerald-400 text-xs font-bold">
+                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                        <span>เพื่อนร่วมงาน</span>
+                      </div>
+                      <div class="text-[10px] text-slate-300 mt-1 font-mono">กิตติศักดิ์ ช.</div>
+                      <div class="text-[9px] text-slate-400 font-mono">ACC_0105 (KBank)</div>
+                    </button>
+
+                    <button onclick="selectRecipientPreset('mule')" id="btn-rcp-mule" class="p-2.5 rounded-xl border border-slate-700 bg-slate-800 text-left transition-all opacity-70">
+                      <div class="flex items-center gap-1.5 text-rose-400 text-xs font-bold">
+                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                        <span>ม้าต้องสงสัย</span>
+                      </div>
+                      <div class="text-[10px] text-slate-300 mt-1 font-mono">สมชาย (AOC List)</div>
+                      <div class="text-[9px] text-slate-400 font-mono">ACC_0001 (Mule)</div>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Transfer Amount with Quick Chips -->
+                <div>
+                  <div class="flex justify-between items-center mb-1">
+                    <label class="text-[11px] text-slate-300 font-semibold">จำนวนเงินที่ต้องการโอน (THB):</label>
+                    <span class="text-[10px] text-slate-400">ฟรีค่าธรรมเนียม</span>
+                  </div>
+                  <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-sm font-bold text-slate-400 font-mono">฿</span>
+                    <input type="number" id="tx-input-amount" value="650" class="w-full bg-[#141E33] border border-white/[0.12] rounded-xl pl-7 pr-3 py-2 text-white font-mono text-base font-bold focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all">
+                  </div>
+                  
+                  <!-- Quick Amount Chips -->
+                  <div class="flex gap-1.5 mt-2">
+                    <button onclick="setTransferAmount(100)" class="flex-1 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-[10px] font-mono text-slate-300 transition-colors">+100</button>
+                    <button onclick="setTransferAmount(500)" class="flex-1 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-[10px] font-mono text-slate-300 transition-colors">+500</button>
+                    <button onclick="setTransferAmount(1000)" class="flex-1 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-[10px] font-mono text-slate-300 transition-colors">+1,000</button>
+                    <button onclick="setTransferAmount(35000)" class="flex-1 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-[10px] font-mono text-amber-400 transition-colors">+35k</button>
+                  </div>
+                </div>
+
+                <!-- Simulation Params -->
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                  <div>
+                    <label class="text-[10px] text-slate-400 font-medium block mb-1">เวลาในหน้าจอ (วินาที):</label>
+                    <input type="number" id="tx-input-duration" value="45" min="2" max="300" class="w-full bg-[#141E33] border border-white/[0.1] rounded-xl px-2.5 py-1.5 text-white font-mono text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                    <span class="text-[9px] text-slate-500">&lt;15s = มิจฉาชีพเร่งรัด</span>
+                  </div>
+                  <div>
+                    <label class="text-[10px] text-slate-400 font-medium block mb-1">วิธียืนยันตัวตน:</label>
+                    <select id="tx-input-auth" class="w-full bg-[#141E33] border border-white/[0.1] rounded-xl px-2 py-1.5 text-white text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+                      <option value="pin">PIN 6 หลัก</option>
+                      <option value="face_scan">Face Scan</option>
+                      <option value="none">None (ไม่มี)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Confirm Transfer Button -->
+                <button onclick="executeTransferEvaluation()" class="w-full bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center gap-2 mt-2">
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                  <span>ยืนยันการโอนเงิน (Pre-Screening)</span>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- iPhone Bottom Home Indicator -->
+            <div class="iphone-home-indicator"></div>
+
+          </div>
+        </div>
+
+        <!-- COLUMN 2: 2 Crystal-Clear Storytelling Cards (Wealth & Security) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- STORY CARD 1: WealthPilot — การบริหารเงินเดือน First Jobber -->
+          <div class="fintech-panel p-6 sm:p-7 space-y-5">
+            <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500/25 to-teal-500/20 text-emerald-400 flex items-center justify-center shadow-inner border border-emerald-500/30">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="9.5" fill="url(#wp-coin-grad-1)" stroke="#10B981" stroke-width="1.5"/>
+                    <path d="M12 6V18M8 9.5C8 8.1 9.8 7 12 7C14.2 7 16 8.1 16 9.5C16 11.2 13.8 11.8 12 12C9.5 12.3 8 13.2 8 14.8C8 16.5 10 17 12 17C14 17 16 16.1 16 14.8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+                    <defs>
+                      <linearGradient id="wp-coin-grad-1" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#047857"/>
+                        <stop offset="0.6" stop-color="#10B981"/>
+                        <stop offset="1" stop-color="#34D399"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-white">1. WealthPilot ช่วยบริหารเงินเดือนคุณอย่างไร?</h3>
+                  <p class="text-xs text-slate-400">ตัดปัญหาเงินชนเดือน ด้วยการกันเงินค่าใช้จ่ายจำเป็นล่วงหน้าทันทีที่เงินเดือนเข้า</p>
+                </div>
+              </div>
+              <span class="text-xs bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-bold shrink-0">
+                อัตโนมัติ 100%
+              </span>
+            </div>
+
+            <!-- Salary Breakdown Flow -->
+            <div class="bg-[#141E33]/70 p-4 rounded-2xl border border-white/[0.06] space-y-3">
+              <div class="text-xs text-slate-300 font-semibold flex items-center justify-between">
+                <span>เงินเดือนเข้า: <b class="text-white font-mono text-sm" id="story-salary-display">฿ 28,000.00</b></span>
+                <span class="text-emerald-400 text-[11px] inline-flex items-center gap-1">หักเก็บค่าใช้จ่ายจำเป็นล่วงหน้า <i data-lucide="arrow-down" class="w-3 h-3"></i></span>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                <div class="bg-[#080C14] p-3 rounded-xl border border-white/[0.06]">
+                  <span class="text-slate-400 flex items-center gap-1 text-[10px]">
+                    <span class="w-4 h-4 rounded-md bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+                      <i data-lucide="home" class="w-2.5 h-2.5"></i>
+                    </span>
+                    <span>ค่าเช่าห้อง (25%)</span>
+                  </span>
+                  <b class="text-white text-sm font-mono mt-1.5 block" id="bk-rent">฿ 7,000.00</b>
+                </div>
+                <div class="bg-[#080C14] p-3 rounded-xl border border-white/[0.06]">
+                  <span class="text-slate-400 flex items-center gap-1 text-[10px]">
+                    <span class="w-4 h-4 rounded-md bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400 shrink-0">
+                      <i data-lucide="credit-card" class="w-2.5 h-2.5"></i>
+                    </span>
+                    <span>หนี้ผ่อนชำระ (12%)</span>
+                  </span>
+                  <b class="text-white text-sm font-mono mt-1.5 block" id="bk-debt">฿ 3,360.00</b>
+                </div>
+                <div class="bg-[#080C14] p-3 rounded-xl border border-white/[0.06]">
+                  <span class="text-slate-400 flex items-center gap-1 text-[10px]">
+                    <span class="w-4 h-4 rounded-md bg-amber-400/15 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0">
+                      <i data-lucide="zap" class="w-2.5 h-2.5"></i>
+                    </span>
+                    <span>ค่าน้ำ/ไฟ/เน็ต (5%)</span>
+                  </span>
+                  <b class="text-white text-sm font-mono mt-1.5 block" id="bk-util">฿ 1,400.00</b>
+                </div>
+                <div class="bg-[#080C14] p-3 rounded-xl border border-white/[0.06]">
+                  <span class="text-slate-400 flex items-center gap-1 text-[10px]">
+                    <span class="w-4 h-4 rounded-md bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                      <i data-lucide="shield-check" class="w-2.5 h-2.5"></i>
+                    </span>
+                    <span>เงินกันสำรอง</span>
+                  </span>
+                  <b class="text-emerald-400 text-sm font-mono mt-1.5 block" id="bk-buffer">฿ 3,000.00</b>
+                </div>
+              </div>
+
+              <!-- Explanation Nudge -->
+              <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/25 flex items-start gap-2.5 text-xs text-emerald-300 leading-relaxed">
+                <i data-lucide="info" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                <span id="nudge-message-display">
+                  ยอด Safe-to-Spend ประจำวัน: ฿ 671.14 (คำนวณจากยอดคงเหลือหักภาระคงที่สิ้นเดือน หารด้วยจำนวนวันที่เหลือก่อนเงินเดือนออก)
+                </span>
+              </div>
+            </div>
+
+            <!-- Cashflow Forecast Chart Container: Real-Time Synced -->
+            <div class="pt-2 space-y-3">
+              <!-- Header Row with Title & Health Pill -->
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+                    <span class="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                      <i data-lucide="trending-up" class="w-3 h-3"></i>
+                    </span>
+                    <span>กราฟคาดการณ์กระแสเงินสดเชื่อมโยงเวลาปัจจุบัน</span>
+                  </h4>
+                  <p class="text-[11px] text-slate-400">เชื่อมโยงประวัติ 7 วันที่ผ่านมา • จุดปัจจุบันวันนี้ • และคาดการณ์อนาคตถึงวันเงินเดือนออก</p>
+                </div>
+                <div id="forecast-health-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-mono shadow-sm">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span id="forecast-health-text">สภาพคล่องแข็งแรง (Healthy Runway)</span>
+                </div>
+              </div>
+
+              <!-- Live Real-Time Current Datetime & Payday Countdown Strip -->
+              <div class="flex flex-wrap items-center justify-between gap-2 bg-[#09111F]/90 px-3.5 py-2.5 rounded-xl border border-cyan-500/25 text-xs shadow-inner">
+                <div class="flex items-center gap-2">
+                  <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+                  </span>
+                  <span class="text-slate-300 font-medium">เวลาปัจจุบัน (Live):</span>
+                  <span class="font-mono text-cyan-300 font-bold" id="fc-live-datetime">
+                    วันจันทร์ที่ 14 ก.ย. 2026 • 20:30:00 น.
+                  </span>
+                </div>
+                <div class="flex items-center gap-2 text-[11px]">
+                  <span class="text-slate-400">นับถอยหลังรอบเงินเดือนเข้า:</span>
+                  <span class="font-mono text-amber-300 font-bold bg-amber-500/15 px-2.5 py-0.5 rounded-full border border-amber-500/30 shadow-sm" id="fc-payday-live-countdown">
+                    อีก 13 วัน 3 ชม. 29 นาที
+                  </span>
+                </div>
+              </div>
+
+              <!-- Quick Timeline Legend & Explainer Bar -->
+              <div class="flex flex-wrap items-center justify-between gap-2 bg-[#0E1726]/80 px-3 py-2 rounded-xl border border-white/[0.06] text-[11px]">
+                <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-1 rounded-full bg-sky-400"></span>
+                    <span class="text-slate-300">7 วันย้อนหลัง (ประวัติจริง)</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 border border-white"></span>
+                    <span class="text-cyan-300 font-bold inline-flex items-center gap-1">
+                      <span class="w-3.5 h-3.5 rounded bg-cyan-500/20 text-cyan-400 flex items-center justify-center border border-cyan-500/30">
+                        <i data-lucide="map-pin" class="w-2.5 h-2.5"></i>
+                      </span>
+                      <span>วันนี้ (เวลาปัจจุบัน)</span>
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-0.5 border-t border-dashed border-[#00D068]"></span>
+                    <span class="text-emerald-300">AI คาดการณ์ (Forecast)</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1 text-amber-300 font-medium">
+                  <span class="inline-flex items-center gap-1">
+                    <span class="w-3.5 h-3.5 rounded bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+                      <i data-lucide="sparkles" class="w-2.5 h-2.5"></i>
+                    </span>
+                    <span>28 ก.ย. วันเงินเดือนเข้า</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Canvas Container -->
+              <div class="w-full h-60 relative">
+                <canvas id="cashflow-forecast-chart"></canvas>
+              </div>
+
+              <!-- 3-Pillar Insights Bar -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-white/[0.06] text-xs">
+                <div class="bg-[#141E33]/70 p-2.5 rounded-xl border border-white/[0.04]">
+                  <div class="text-[10px] text-slate-400">จุดต่ำสุดก่อนเงินเดือนออก</div>
+                  <div class="text-sm font-bold text-white font-mono mt-0.5" id="fc-min-balance">฿ 8,433.75</div>
+                  <div class="text-[10px] text-emerald-400 mt-0.5 inline-flex items-center gap-1" id="fc-min-status"><i data-lucide="check-circle" class="w-3 h-3 text-emerald-400"></i> ปลอดภัย ไม่เสี่ยงติดลบ</div>
+                </div>
+                <div class="bg-[#141E33]/70 p-2.5 rounded-xl border border-white/[0.04]">
+                  <div class="text-[10px] text-slate-400">รอบเงินเดือนเข้าถัดไป</div>
+                  <div class="text-sm font-bold text-amber-300 font-mono mt-0.5" id="fc-payday-info">28 ก.ย. (+฿ 24,000)</div>
+                  <div class="text-[10px] text-slate-400 mt-0.5 inline-flex items-center gap-1" id="fc-payday-sub"><i data-lucide="star" class="w-2.5 h-2.5 text-amber-400"></i> จุดกราฟสีทองพุ่งขึ้น</div>
+                </div>
+                <div class="bg-[#141E33]/70 p-2.5 rounded-xl border border-white/[0.04]">
+                  <div class="text-[10px] text-slate-400">สถานะวันนี้ ณ เวลาปัจจุบัน</div>
+                  <div class="text-sm font-bold text-cyan-300 font-mono mt-0.5" id="fc-today-live-status">ใช้วันนี้ ฿ 306.71 / เหลือ ฿ 364.43</div>
+                  <div class="text-[10px] text-slate-400 mt-0.5" id="forecast-summary-text">
+                    สุขภาพกระแสเงินสดแข็งแรง มีเงินเหลือเพียงพอจนถึงวันเงินเดือนออก
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STORY CARD 2: K-Sentinel — การปกป้องจากมิจฉาชีพและบัญชีม้า -->
+          <div class="fintech-panel p-6 sm:p-7 space-y-5">
+            <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-500/25 to-orange-500/20 text-rose-400 flex items-center justify-center shadow-inner border border-rose-500/30">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L4 5V11C4 16.52 7.41 21.61 12 23C16.59 21.61 20 16.52 20 11V5L12 2Z" fill="url(#ks-shield-grad-1)" stroke="#F43F5E" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M12 8V13M12 16H12.01" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                    <defs>
+                      <linearGradient id="ks-shield-grad-1" x1="4" y1="2" x2="20" y2="23" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#881337"/>
+                        <stop offset="1" stop-color="#E11D48"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-white">2. K-Sentinel ปกป้องคุณจากกลโกงอย่างไร?</h3>
+                  <p class="text-xs text-slate-400">เกราะป้องกันก่อนโอนเงิน สกัดกั้นก่อนเงินออกจากบัญชีคุณ</p>
+                </div>
+              </div>
+              <span class="text-xs bg-rose-500/15 text-rose-400 border border-rose-500/30 px-3 py-1 rounded-full font-bold shrink-0">
+                สกัดกั้น &lt; 80ms
+              </span>
+            </div>
+
+            <!-- 3 Shield Layers -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div class="bg-[#141E33]/70 p-3.5 rounded-xl border border-white/[0.06] space-y-1">
+                <div class="text-emerald-400 font-bold text-xs flex items-center gap-1">
+                  <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                  <span>1. สกัดกั้นทันที</span>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-relaxed">
+                  ตรวจจับบัญชีม้าและพฤติกรรมผิดปกติล่วงหน้าใน <b>4–11 มิลลิวินาที</b> ก่อนคุณกดยืนยันโอน
+                </p>
+              </div>
+
+              <div class="bg-[#141E33]/70 p-3.5 rounded-xl border border-white/[0.06] space-y-1">
+                <div class="text-amber-400 font-bold text-xs flex items-center gap-1">
+                  <i data-lucide="lightbulb" class="w-3.5 h-3.5"></i>
+                  <span>2. บอกเหตุผลชัดเจน</span>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-relaxed">
+                  อธิบายความเสี่ยงภาษาคน เช่น บัญชีเพิ่งเปิดใหม่ หรือมีประวัติรับเงินแล้วโอนออกทันที
+                </p>
+              </div>
+
+              <div class="bg-[#141E33]/70 p-3.5 rounded-xl border border-white/[0.06] space-y-1">
+                <div class="text-sky-400 font-bold text-xs flex items-center gap-1">
+                  <i data-lucide="timer" class="w-3.5 h-3.5"></i>
+                  <span>3. หน่วงเวลาดึงสติ</span>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-relaxed">
+                  เปิดหน้าต่าง Cool-Off 15 นาทีตามคำแนะนำตำรวจไซเบอร์ ช่วยให้เหยื่อ &gt;85% ได้สติและโทรปรึกษา
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================================================================ -->
+    <!-- VIEW 2: BANK SECOPS & FRAUD INTELLIGENCE                                     -->
+    <!-- ============================================================================ -->
+    <section id="view-secops" class="hidden transition-opacity duration-300 space-y-6">
+      
+      <!-- Top Banner -->
+      <div class="fintech-panel p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+            <span>ศูนย์ควบคุมหลังบ้านธนาคาร (Bank SecOps Command Center)</span>
+          </div>
+          <h2 class="text-xl font-bold text-white mt-1 flex items-center gap-2">
+            <span>การตรวจจับและทลายเครือข่ายบัญชีม้า (Mule Ring Intelligence)</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">ระบบเฝ้าระวังธุรกรรมแบบเรียลไทม์ เชื่อมโยงบัญชีม้าด้วยกราฟความสัมพันธ์ (Relational GCN)</p>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <button onclick="toggleKafkaStream()" id="btn-stream-toggle" class="bg-[#141E33] hover:bg-[#1C2942] text-white text-xs px-3.5 py-2 rounded-xl border border-white/[0.1] flex items-center gap-1.5 transition-all">
+            <i data-lucide="pause" id="stream-icon" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span id="stream-btn-text">พักฟีดสด</span>
+          </button>
+          <button onclick="loadSecOpsDashboard()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-1.5 transition-all">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>รีเฟรชข้อมูล</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Key Executive Stat Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="fintech-panel p-5">
+          <div class="text-xs text-slate-400 font-medium">ธุรกรรมที่คัดกรองทั้งหมด</div>
+          <div class="text-2xl font-black text-white mt-1.5 font-mono" id="secops-kpi-total">6,240 รายการ</div>
+          <div class="text-[11px] text-emerald-400 mt-2 flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+            <span>100% Pre-transaction screened</span>
+          </div>
+        </div>
+
+        <div class="fintech-panel p-5">
+          <div class="text-xs text-slate-400 font-medium">สกัดกั้นบัญชีม้าสำเร็จ</div>
+          <div class="text-2xl font-black text-rose-400 mt-1.5 font-mono" id="secops-kpi-intercepted">412 บัญชี</div>
+          <div class="text-[11px] text-slate-400 mt-2 flex items-center gap-1">
+            <i data-lucide="shield" class="w-3.5 h-3.5 text-rose-400"></i>
+            <span>ความแม่นยำโมเดล 88.4%</span>
+          </div>
+        </div>
+
+        <div class="fintech-panel p-5">
+          <div class="text-xs text-slate-400 font-medium">มูลค่าความเสียหายที่ป้องกันได้</div>
+          <div class="text-2xl font-black text-emerald-400 mt-1.5 font-mono" id="secops-kpi-saved">฿ 14.8 ล้านบาท</div>
+          <div class="text-[11px] text-emerald-400 mt-2 flex items-center gap-1">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+            <span>First Jobbers Assets Saved</span>
+          </div>
+        </div>
+
+        <div class="fintech-panel p-5">
+          <div class="text-xs text-slate-400 font-medium">ความเร็วเฉลี่ยในการคัดกรอง</div>
+          <div class="text-2xl font-black text-white mt-1.5 font-mono" id="secops-kpi-latency">4.82 ms</div>
+          <div class="text-[11px] text-slate-400 mt-2 flex items-center gap-1">
+            <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>Core Banking SLA &lt; 80ms</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main SecOps Dual Panel: Network Graph + Kafka Stream -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left 8 Cols: Interactive Mule Network Graph (Vis.js) -->
+        <div class="lg:col-span-8 fintech-panel p-6 flex flex-col space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
+            <div>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="share-2" class="w-4 h-4 text-emerald-400"></i>
+                <span>แผนผังความสัมพันธ์เครือข่ายบัญชีม้า (Relational Mule Topology)</span>
+              </h3>
+              <p class="text-xs text-slate-400">วิเคราะห์เส้นทางฟอกเงิน 3 ชั้น (Mule Hop 1-3) และระบุ Node บัญชีเป้าหมาย</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="graphFitView()" title="จัดตำแหน่งกึ่งกลาง" class="p-2 rounded-xl bg-[#141E33] hover:bg-[#1C2942] border border-white/[0.08] text-slate-300 hover:text-white transition-colors">
+                <i data-lucide="maximize" class="w-4 h-4"></i>
+              </button>
+              <button onclick="toggleGraphPhysics()" id="btn-physics-toggle" title="ตรึงตำแหน่งโหนด (Freeze Physics)" class="p-2 rounded-xl bg-[#141E33] hover:bg-[#1C2942] border border-white/[0.08] text-slate-300 hover:text-white transition-colors">
+                <i data-lucide="anchor" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Network Canvas -->
+          <div class="relative w-full h-[480px] rounded-2xl bg-[#090E1A] border border-white/[0.08] overflow-hidden">
+            <div id="mule-network-container" class="w-full h-full"></div>
+            
+            <!-- Graph Legend Overlay -->
+            <div class="absolute bottom-3 left-3 bg-[#0E1524]/90 backdrop-blur-md px-3 py-2 rounded-xl border border-white/[0.08] text-[10px] space-y-1 z-10">
+              <div class="flex items-center gap-2 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span>บัญชีลูกค้าปกติ (Legit)</span>
+              </div>
+              <div class="flex items-center gap-2 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                <span>บัญชีเฝ้าระวัง (Suspect)</span>
+              </div>
+              <div class="flex items-center gap-2 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                <span>บัญชีม้ายืนยันแล้ว (AOC Blocked)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node Inspector Box (Appears when clicking a node) -->
+          <div id="node-inspector-box" class="hidden p-4 rounded-xl bg-[#141E33] border border-emerald-500/30 text-xs">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-bold text-white flex items-center gap-1.5">
+                <i data-lucide="info" class="w-4 h-4 text-emerald-400"></i>
+                <span>ข้อมูลโหนดที่เลือก: <b id="insp-account-id" class="font-mono text-emerald-400">ACC_0001</b></span>
+              </span>
+              <button onclick="document.getElementById('node-inspector-box').classList.add('hidden')" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+              <div>อายุบัญชี: <b class="text-white" id="insp-age">2 วัน</b></div>
+              <div>ระดับ KYC: <b class="text-white" id="insp-kyc">Level 1</b></div>
+              <div>ความเร็วโอนออก: <b class="text-rose-400 font-bold" id="insp-vel">30 วินาที</b></div>
+              <div>สถานะ: <b class="text-rose-400 font-bold" id="insp-role-badge">MULE_RING</b></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 4 Cols: Real-Time Kafka Event Stream -->
+        <div class="lg:col-span-4 fintech-panel p-6 flex flex-col space-y-4">
+          <div class="border-b border-white/[0.08] pb-3 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
+                <span>สตรีมธุรกรรมสด (Kafka Ingestion)</span>
+              </h3>
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            </div>
+            <p class="text-xs text-slate-400">Topic: <code>kplus.transfers.v2</code> (&lt; 2ms ingestion)</p>
+            
+            <!-- Quick Filter Chips -->
+            <div class="flex items-center gap-1.5 pt-1">
+              <button onclick="filterKafkaStream('ALL')" id="kafka-filter-all" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-600 text-white transition-all shadow-sm">
+                ทั้งหมด (<span id="count-kafka-all">10</span>)
+              </button>
+              <button onclick="filterKafkaStream('BLOCKED')" id="kafka-filter-blocked" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-rose-400 hover:bg-slate-700 transition-all border border-rose-500/20">
+                สกัดม้า (<span id="count-kafka-blocked">0</span>)
+              </button>
+              <button onclick="filterKafkaStream('APPROVED')" id="kafka-filter-approved" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-emerald-400 hover:bg-slate-700 transition-all border border-emerald-500/20">
+                ปกติ (<span id="count-kafka-approved">0</span>)
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-y-auto max-h-[500px] space-y-2 pr-1" id="kafka-stream-list">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================================================================ -->
+    <!-- VIEW 3: BUSINESS IMPACT & SLA BENCHMARK                                      -->
+    <!-- ============================================================================ -->
+    <section id="view-casa" class="hidden transition-opacity duration-300 space-y-6">
+      
+      <div class="fintech-panel p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+            <i data-lucide="trending-up" class="w-4 h-4"></i>
+            <span>คุณค่าทางธุรกิจและตัวชี้วัด (Business Value &amp; Banking SLA)</span>
+          </div>
+          <h2 class="text-xl font-bold text-white mt-1">การสร้างมูลค่าเงินฝากต้นทุนต่ำ (CASA) และความเร็วระบบระดับธนาคาร</h2>
+          <p class="text-xs text-slate-400 mt-0.5">ตอบโจทย์ยุทธศาสตร์ KBank สำหรับฐานผู้ใช้งาน First Jobber 3.2 ล้านคนบน K PLUS</p>
+        </div>
+        <button onclick="runLiveLatencyBenchmark()" id="btn-benchmark-run" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-emerald-600/25 flex items-center gap-2 transition-all shrink-0">
+          <i data-lucide="zap" class="w-4 h-4"></i>
+          <span>ทดสอบ Benchmark สด (Run Live SLA Test)</span>
+        </button>
+      </div>
+
+      <!-- 2-Column Business Dashboard -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Interactive Simulator Column -->
+        <div class="lg:col-span-7 fintech-panel p-6 space-y-6">
+          <div class="flex justify-between items-center">
+            <h3 class="text-base font-bold text-white">เครื่องจำลองการเติบโตของเงินฝากต้นทุนต่ำ (CASA Simulator)</h3>
+            <span class="text-[11px] text-slate-400 bg-white/[0.05] px-2.5 py-1 rounded-full">Base: 3.2M Users</span>
+          </div>
+
+          <!-- Scenario Presets -->
+          <div class="space-y-1.5">
+            <div class="text-xs text-slate-400 font-semibold">เลือกสมมติฐานทางธุรกิจ (Scenario Presets):</div>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="applyCasaPreset(15, 600)" class="py-2 px-3 rounded-xl bg-[#141E33] hover:bg-[#1C2942] border border-white/[0.08] text-xs font-semibold text-slate-300 transition-colors">
+                Conservative (15%)
+              </button>
+              <button onclick="applyCasaPreset(35, 1200)" class="py-2 px-3 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/40 border border-emerald-500/40 text-xs font-semibold text-emerald-300 transition-colors">
+                Base Case (35%)
+              </button>
+              <button onclick="applyCasaPreset(65, 2000)" class="py-2 px-3 rounded-xl bg-[#141E33] hover:bg-[#1C2942] border border-white/[0.08] text-xs font-semibold text-slate-300 transition-colors">
+                Aggressive (65%)
+              </button>
+            </div>
+          </div>
+
+          <!-- Slider 1: Adoption Rate -->
+          <div class="space-y-2 bg-[#141E33]/60 p-4 rounded-xl border border-white/[0.06]">
+            <div class="flex justify-between items-center text-sm font-semibold text-white">
+              <span>อัตราการเปิดใช้งาน WealthPilot (% Adoption):</span>
+              <span id="calc-adopt-label" class="text-emerald-400 font-mono text-base">35%</span>
+            </div>
+            <input type="range" id="slider-adopt" min="5" max="85" step="5" value="35" oninput="recalcCasaImpact()" class="w-full accent-emerald-500 cursor-pointer">
+            <div class="flex justify-between text-[11px] text-slate-400 font-mono">
+              <span>5% (Early Adopters)</span>
+              <span>85% (Mass Penetration)</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: Monthly Sweep Avg -->
+          <div class="space-y-2 bg-[#141E33]/60 p-4 rounded-xl border border-white/[0.06]">
+            <div class="flex justify-between items-center text-sm font-semibold text-white">
+              <span>ยอดเงินกวาดออมเฉลี่ยต่อคนต่อเดือน (THB/User/Month):</span>
+              <span id="calc-sweep-label" class="text-emerald-400 font-mono text-base">฿ 1,200</span>
+            </div>
+            <input type="range" id="slider-sweep" min="300" max="2500" step="50" value="1200" oninput="recalcCasaImpact()" class="w-full accent-emerald-500 cursor-pointer">
+            <div class="flex justify-between text-[11px] text-slate-400 font-mono">
+              <span>฿ 300 (Micro-Saver)</span>
+              <span>฿ 2,500 (Aggressive Saver)</span>
+            </div>
+          </div>
+
+          <!-- Annual Result Banner: Luxury Emerald Glassmorphism Card -->
+          <div class="relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-[#062c1d]/95 via-[#0A1e17] to-[#0d1b2a] p-6 shadow-2xl shadow-emerald-950/50">
+            <!-- Ambient glowing accent -->
+            <div class="absolute -right-10 -top-10 w-44 h-44 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-10 -bottom-10 w-36 h-36 bg-green-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-4">
+              <!-- Header Row -->
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-sm font-bold shadow-inner">
+                    <i data-lucide="sprout" class="w-4 h-4 text-emerald-400"></i>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300/90 block">
+                      Low-Cost CASA Growth
+                    </span>
+                    <h4 class="text-sm font-bold text-white leading-tight">
+                      มูลค่าเงินฝากต้นทุนต่ำที่ดึงดูดได้ต่อปี
+                    </h4>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm whitespace-nowrap">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  KBank CASA Engine
+                </span>
+              </div>
+
+              <!-- Hero Number Container -->
+              <div class="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-emerald-500/20 shadow-inner">
+                <div class="text-[11px] text-slate-400 font-medium mb-1">
+                  ยอดเงินฝากหมุนเวียนสะสมที่ไหลเข้าสู่ระบบธนาคารกสิกรไทย:
+                </div>
+                <div id="calc-result-annual" class="flex flex-wrap items-baseline gap-2.5">
+                  <span class="text-3xl sm:text-4xl lg:text-5xl font-black font-mono text-emerald-300 tracking-tight drop-shadow" id="calc-casa-number">
+                    ฿ 16.13
+                  </span>
+                  <span class="text-xl sm:text-2xl font-bold text-white">
+                    พันล้านบาท
+                  </span>
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-400/10 text-emerald-300 border border-emerald-400/30 whitespace-nowrap" id="calc-casa-badge">
+                    16.13 Billion THB
+                  </span>
+                </div>
+              </div>
+
+              <!-- Sub-stats Bar -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 border-t border-white/[0.08] text-xs">
+                <div class="flex items-center justify-between bg-white/[0.03] px-3.5 py-2.5 rounded-xl border border-white/[0.04]">
+                  <span class="text-slate-400">เป้าหมาย Pitch Deck:</span>
+                  <span class="font-bold text-white font-mono">1.2 – 2.0 พันล้านบาท</span>
+                </div>
+                <div class="flex items-center justify-between bg-white/[0.03] px-3.5 py-2.5 rounded-xl border border-white/[0.04]">
+                  <span class="text-slate-400">ผู้ใช้ออมอัตโนมัติ:</span>
+                  <span class="font-bold text-emerald-400 font-mono"><b id="calc-result-users">1,120,000</b> คน</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Latency Benchmark & SLA Section: Super Intuitive & Executive-Ready -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="fintech-panel p-5 space-y-4">
+            
+            <!-- Section Header with Clear Meaning -->
+            <div class="flex items-start justify-between gap-2 border-b border-white/[0.08] pb-3">
+              <div>
+                <h4 class="text-sm font-bold text-white flex items-center gap-1.5">
+                  <span class="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                    <i data-lucide="zap" class="w-3 h-3 text-emerald-400"></i>
+                  </span>
+                  <span>ความเร็วในการสกัดกั้นกลโกง (Latency SLA Benchmark)</span>
+                </h4>
+                <p class="text-[11px] text-slate-400 mt-0.5">
+                  เกณฑ์มาตรฐานธนาคารต้อง &lt; <b>80 ms</b> เพื่อไม่ให้ผู้ใช้งาน K PLUS รู้สึกสะดุด
+                </p>
+              </div>
+              <span class="text-xs bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-full font-bold font-mono shrink-0 flex items-center gap-1.5 shadow-sm">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>ผ่านเกณฑ์ 100%</span>
+              </span>
+            </div>
+
+            <!-- Visual Headroom Progress Bar (เข้าใจง่ายใน 2 วินาที) -->
+            <div class="bg-[#09111F]/90 p-3 rounded-xl border border-white/[0.06] space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-300 flex items-center gap-1.5 font-medium">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span>ความเร็ว K-Sentinel เฉลี่ย: <b class="text-emerald-300 font-mono" id="disp-headroom-val">3.85 ms</b></span>
+                </span>
+                <span class="text-slate-400 font-mono text-[11px]">
+                  เพดานสูงสุด SLA: <b class="text-rose-400">80.00 ms</b>
+                </span>
+              </div>
+              <!-- Visual Bar -->
+              <div class="w-full h-3.5 bg-slate-800/80 rounded-full overflow-hidden flex p-0.5 border border-white/[0.05]">
+                <div class="bg-gradient-to-r from-emerald-500 to-green-400 h-full rounded-full transition-all duration-500 shadow-sm" style="width: 4.8%;" id="headroom-fill-bar"></div>
+                <div class="bg-slate-700/40 h-full rounded-full flex-1 ml-1 flex items-center justify-end pr-2 text-[9px] text-slate-400 font-mono" id="headroom-margin-text">
+                  เหลือเวลาสำรองให้ระบบอื่น 95.2% (76.15 ms)
+                </div>
+              </div>
+              <div class="flex justify-between text-[10px] text-slate-400 pt-0.5">
+                <span class="text-emerald-400 font-medium inline-flex items-center gap-1"><i data-lucide="zap" class="w-3 h-3 text-emerald-400"></i> จุดยิ่งต่ำยิ่งเร็ว (สกัดกั้นก่อนเงินออกจากบัญชี)</span>
+                <span class="text-rose-400 font-medium inline-flex items-center gap-1"><i data-lucide="alert-octagon" class="w-3 h-3 text-rose-400"></i> เกิน 80ms คือช้าเกินเกณฑ์</span>
+              </div>
+            </div>
+
+            <!-- Quick Chart Legend Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-[#0E1726]/80 px-3 py-1.5 rounded-lg border border-white/[0.05] text-[11px]">
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-1 rounded-full bg-[#00D068]"></span>
+                  <span class="text-slate-300">เส้นเขียว: ความเร็วจริงของ K-Sentinel (1.2 – 11.6 ms)</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-0.5 border-t border-dashed border-rose-500"></span>
+                  <span class="text-rose-400">เส้นประแดง: เพดานสูงสุด (80 ms)</span>
+                </div>
+              </div>
+              <span class="text-[10px] text-slate-400 font-mono" id="disp-benchmark-time">อัปเดตล่าสุด: เวลาปัจจุบัน</span>
+            </div>
+            
+            <div class="w-full h-52">
+              <canvas id="latency-benchmark-chart"></canvas>
+            </div>
+
+            <!-- 3 Percentiles with Plain-Thai Explanations -->
+            <div class="grid grid-cols-3 gap-2 pt-1">
+              <div class="bg-[#141E33]/90 p-2.5 rounded-xl border border-white/[0.08] text-center">
+                <div class="text-[10px] font-bold text-slate-400">P50 (ธุรกรรมทั่วไป)</div>
+                <div class="text-base font-black text-white mt-0.5 font-mono" id="disp-p50">3.85 ms</div>
+                <div class="text-[9px] text-emerald-400 mt-1 leading-tight">เร็วทันที ไม่รู้สึกหน่วง</div>
+              </div>
+              <div class="bg-[#141E33]/90 p-2.5 rounded-xl border border-white/[0.08] text-center">
+                <div class="text-[10px] font-bold text-slate-400">P95 (ช่วงโอนพร้อมกัน)</div>
+                <div class="text-base font-black text-white mt-0.5 font-mono" id="disp-p95">5.11 ms</div>
+                <div class="text-[9px] text-emerald-400 mt-1 leading-tight">รองรับ High-Load สบายๆ</div>
+              </div>
+              <div class="bg-[#141E33]/90 p-2.5 rounded-xl border border-white/[0.08] text-center">
+                <div class="text-[10px] font-bold text-slate-400">P99 (ช่วงโหลดสูงสุด)</div>
+                <div class="text-base font-black text-emerald-400 mt-0.5 font-mono" id="disp-p99">11.62 ms</div>
+                <div class="text-[9px] text-emerald-400 mt-1 leading-tight">เร็วกว่าเกณฑ์ 80ms ถึง 7x!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fintech-panel p-5">
+            <h4 class="text-sm font-bold text-sky-400 mb-2.5 flex items-center gap-2">
+              <i data-lucide="landmark" class="w-4 h-4"></i>
+              <span>ประโยชน์ต่อ KBank &amp; K PLUS</span>
+            </h4>
+            <ul class="text-xs text-slate-300 space-y-2 list-disc list-inside leading-relaxed">
+              <li><b>CASA Deposit Growth:</b> ดึงเงินฝาก 1.2B – 2.0B THB จากระบบ Micro-sweeping อัตโนมัติ</li>
+              <li><b>Fraud Mitigation:</b> ลดภาระคดีความและการอายัดบัญชี AOC 1441 ลงมากกว่า 85%</li>
+              <li><b>Customer Retention:</b> ล็อกความผูกพันและสร้าง Daily Active Users (DAU) ตั้งแต่เริ่มทำงาน</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================================== -->
+  <!-- MODALS SYSTEM                                                                  -->
+  <!-- ============================================================================== -->
+
+  <!-- MODAL 1: K-SENTINEL THREAT ALERT & COUNTERFACTUAL XAI -->
+  <div id="modal-sentinel-alert" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0F172A] border border-rose-500/40 rounded-3xl max-w-md w-full p-6 shadow-2xl relative space-y-4">
+      
+      <!-- Alert Header -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-500 flex items-center justify-center shrink-0 border border-rose-500/30">
+          <i data-lucide="shield-alert" class="w-7 h-7"></i>
+        </div>
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider bg-rose-500/20 text-rose-400 px-2.5 py-0.5 rounded-full" id="modal-alert-tier">CRITICAL_RISK</span>
+          <h3 class="text-base font-bold text-white mt-1" id="modal-alert-title">สกัดกั้นรายการฉุกเฉิน (CRITICAL SCAM TRAP)</h3>
+        </div>
+      </div>
+
+      <!-- Actionable Warning Message -->
+      <div class="p-3.5 bg-rose-950/40 border border-rose-500/30 rounded-2xl text-xs text-rose-200 leading-relaxed font-medium flex items-center gap-2" id="modal-alert-msg">
+        <i data-lucide="shield-alert" class="w-4 h-4 text-rose-400 shrink-0"></i>
+        <span>สกัดกั้นรายการฉุกเฉิน! บัญชีปลายทางตรงกับเครือข่ายบัญชีม้าหลอกลวง (AOC List)</span>
+      </div>
+
+      <!-- Counterfactual XAI Reason Box -->
+      <div class="p-3.5 bg-[#141E33] rounded-2xl border border-white/[0.08] text-xs text-slate-300 space-y-1.5">
+        <div class="font-bold text-amber-400 flex items-center gap-1.5 text-xs">
+          <i data-lucide="lightbulb" class="w-4 h-4"></i>
+          <span>เหตุผลที่ AI สกัดกั้น (Counterfactual XAI):</span>
+        </div>
+        <p id="modal-alert-xai" class="text-slate-300 leading-relaxed">
+          ตรวจพบพฤติกรรมถูกเร่งรัดโอนเงิน (&lt;15 วินาที) และมูลค่าโอนสูงกว่าค่าเฉลี่ยปกติ 53.8 เท่า
+        </p>
+      </div>
+
+      <!-- Action Buttons (Dynamically Populated by openSentinelModal) -->
+      <div class="space-y-2.5 pt-1" id="modal-alert-actions">
+        <button onclick="openCoolOffModal()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-rose-600/30 transition-all flex items-center justify-center gap-2 text-xs">
+          <i data-lucide="clock" class="w-4 h-4 text-white"></i>
+          <span>เปิดมาตรการ Cool-Off 15 นาที</span>
+        </button>
+      </div>
+
+      <!-- Cancel / Close Button -->
+      <button onclick="closeSentinelModal()" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white font-medium text-xs border border-white/[0.08] transition-colors">
+        ยกเลิกรายการโอนเงิน (Cancel Transfer)
+      </button>
+
+    </div>
+  </div>
+
+  <!-- MODAL 2: WEBRTC CAMERA BIOMETRIC LIVENESS SCAN -->
+  <div id="modal-camera-scan" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0F172A] border border-emerald-500/40 rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl space-y-4">
+      <div class="text-sm font-bold text-white flex items-center justify-center gap-2">
+        <i data-lucide="scan-face" class="w-5 h-5 text-emerald-400"></i>
+        <span>การสแกนใบหน้าตรวจสอบตัวตน (Face Liveness)</span>
+      </div>
+      <p class="text-xs text-slate-400">กรุณามองตรงที่กล้องและกะพริบตาเพื่อยืนยันตัวตนสด</p>
+
+      <!-- Video Scanner Box -->
+      <div class="relative w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-emerald-500/50 shadow-xl bg-slate-950 flex items-center justify-center">
+        <video id="webcam-video" class="w-full h-full object-cover transform -scale-x-100" autoplay playsinline muted></video>
+        <div class="absolute inset-0 border-2 border-dashed border-emerald-400/60 rounded-full animate-spin-slow pointer-events-none"></div>
+      </div>
+
+      <!-- Progress Status -->
+      <div class="space-y-1.5">
+        <div class="text-xs font-mono text-emerald-400" id="camera-status-text">กำลังเชื่อมต่อกล้องหน้า...</div>
+        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div id="camera-progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-300" style="width: 20%;"></div>
+        </div>
+      </div>
+
+      <!-- Simulation Bypass Option -->
+      <button onclick="simulateFaceScanSuccess()" class="text-xs text-slate-400 hover:text-emerald-400 underline">
+        (หรือคลิกเพื่อจำลองผลสแกนใบหน้าสำเร็จทันที)
+      </button>
+
+      <button onclick="closeCameraModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-white/[0.08]">
+        ยกเลิกการสแกน
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL 3: K PLUS OFFICIAL SUCCESS SLIP -->
+  <div id="modal-kplus-slip" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0F172A] border border-emerald-500/40 rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 relative slip-drop-anim">
+      
+      <!-- Slip Header with K PLUS Branding -->
+      <div class="text-center space-y-1 pb-3 border-b border-white/[0.08]">
+        <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-2 border border-emerald-500/30 shadow-lg shadow-emerald-500/20">
+          <i data-lucide="check" class="w-6 h-6 stroke-[3]"></i>
+        </div>
+        <div class="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>โอนเงินสำเร็จ (K PLUS E-Slip)</span>
+        </div>
+        <p class="text-[11px] text-slate-400 font-mono" id="slip-timestamp">14 ก.ย. 2026 • 19:42 น.</p>
+      </div>
+
+      <!-- Slip Details -->
+      <div class="space-y-2.5 text-xs">
+        <div class="flex justify-between items-center">
+          <span class="text-slate-400">จาก (ผู้โอน):</span>
+          <span class="text-white font-mono font-medium" id="slip-from">ACC_0100 (••4291)</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-slate-400">ไปยัง (ผู้รับ):</span>
+          <span class="text-white font-medium" id="slip-to">กิตติศักดิ์ ช. (KBank)</span>
+        </div>
+        <div class="flex justify-between items-center pt-2.5 border-t border-white/[0.08]">
+          <span class="text-slate-400 font-semibold">จำนวนเงิน:</span>
+          <span class="text-2xl font-black text-emerald-400 font-mono" id="slip-amount">฿ 650.00</span>
+        </div>
+        <div class="flex justify-between text-[11px] pt-1">
+          <span class="text-slate-400">ค่าธรรมเนียม:</span>
+          <span class="text-emerald-400 font-semibold">฿ 0.00 (ฟรี)</span>
+        </div>
+        <div class="flex justify-between text-[11px]">
+          <span class="text-slate-400">เลขที่อ้างอิง:</span>
+          <span class="text-slate-300 font-mono" id="slip-ref">20260914KP849201</span>
+        </div>
+      </div>
+
+      <!-- Security Shield Stamp -->
+      <div class="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 flex items-center gap-2.5 text-[11px] text-emerald-300">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+        <span>ตรวจสอบความปลอดภัยผ่าน K-Sentinel AI (&lt; 80ms)</span>
+      </div>
+
+      <button onclick="closeKplusSlipModal()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/30 transition-all">
+        เสร็จสิ้น
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL 4: 15-MINUTE COOL-OFF COUNTDOWN WINDOW -->
+  <div id="modal-cooloff-timer" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-[#0F172A] border border-rose-500/50 rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl relative space-y-4">
+      
+      <div class="w-14 h-14 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto border border-rose-500/30">
+        <i data-lucide="timer" class="w-8 h-8"></i>
+      </div>
+
+      <div>
+        <h3 class="text-base font-bold text-white">Dynamic Cool-Off Window (15 นาที)</h3>
+        <p class="text-xs text-slate-400 mt-1">ระบบระงับการโอนชั่วคราวเพื่อทำลายภาวะการถูกบีบคั้นจิตวิทยา (Disrupt Psychological Coercion)</p>
+      </div>
+
+      <!-- Active Timer Countdown Display -->
+      <div class="py-4 bg-[#141E33] rounded-2xl border border-rose-500/30">
+        <div class="text-4xl font-mono font-black text-rose-400 tracking-wider" id="cooloff-timer-digits">15:00</div>
+        <div class="text-[10px] text-slate-400 mt-1">เวลาที่ต้องรอเพื่อความปลอดภัยก่อนทำรายการใหม่</div>
+      </div>
+
+      <div class="text-xs text-slate-300 bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-left space-y-1">
+        <div class="font-bold text-amber-400 flex items-center gap-1.5">
+          <i data-lucide="info" class="w-3.5 h-3.5"></i>
+          <span>คำแนะนำจากตำรวจไซเบอร์ (AOC 1441):</span>
+        </div>
+        <p class="text-[11px] text-slate-300 leading-relaxed">
+          มิจฉาชีพมักเร่งรัดให้โอนเงินทันที การหยุดรอ 15 นาทีช่วยให้เหยื่อ &gt;85% ได้สติและโทรปรึกษาคนใกล้ชิด
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <button onclick="callPoliceHotline()" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-600/30 transition-all">
+          <i data-lucide="phone-call" class="w-4 h-4"></i>
+          <span>โทรสายด่วนตำรวจไซเบอร์ (AOC 1441)</span>
+        </button>
+        <button onclick="closeCoolOffModal()" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-white/[0.08] transition-colors">
+          เข้าใจแล้ว (ปิดหน้าต่าง)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DYNAMIC ISLAND DETAILS POPUP -->
+  <div id="modal-island-details" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-[#0E1524]/95 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-4 shadow-2xl text-xs max-w-sm w-full hidden">
+    <div class="flex items-center justify-between mb-2">
+      <span class="font-bold text-white flex items-center gap-2">
+        <i data-lucide="shield" class="w-4 h-4 text-emerald-400"></i>
+        <span>K-Sentinel Dynamic Island Shield</span>
+      </span>
+      <button onclick="document.getElementById('modal-island-details').classList.add('hidden')" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+    </div>
+    <div class="space-y-1.5 text-slate-300 text-[11px]">
+      <div>สถานะ: <b class="text-emerald-400 font-bold">Active Shield (เฝ้าระวังตลอดเวลา)</b></div>
+      <div>โมเดล: <b class="text-white">PyG Relational GCN บน ONNX Runtime</b></div>
+      <div>Latency ล่าสุด: <b class="text-emerald-400 font-mono">4.21 ms</b></div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- FULLSCREEN PARTICLES CANVAS (COIN SHOWER BURST & SPARKLES) -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Scripts (Cache-busted v3.0) -->
+  <script src="/static/js/app.js?v=3.0"></script>
+</body>
+</html>
