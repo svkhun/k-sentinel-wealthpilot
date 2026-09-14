@@ -1,14 +1,4 @@
----
-title: K-Sentinel & WealthPilot
-emoji: 🛡️
-colorFrom: green
-colorTo: emerald
-sdk: docker
-app_port: 8000
-pinned: false
----
-
-# 🛡️ K-Sentinel & 💰 WealthPilot (K PLUS for First Jobbers)
+#  K-Sentinel &  WealthPilot (K PLUS for First Jobbers)
 
 > **KBTG Kampus Hackathon 2026 — Track 2: Data Science & Intelligence**  
 > *A unified digital banking copilot on K PLUS integrating autonomous cashflow optimization with sub-80ms real-time relational graph intelligence.*
@@ -22,7 +12,7 @@ pinned: false
 
 ---
 
-## 📌 1. ปัญหาและความสำคัญ (Problem Statement)
+##  1. ปัญหาและความสำคัญ (Problem Statement)
 
 กลุ่มคนเริ่มทำงาน หรือ **First Jobber (อายุ 22–30 ปี จำนวนกว่า 3.2 ล้านคนบน K PLUS)** กำลังเผชิญกับ 2 วิกฤตการณ์ทางการเงินที่ส่งผลกระทบต่อความมั่นคงในชีวิต:
 
@@ -32,7 +22,7 @@ pinned: false
 
 ---
 
-## 🎯 2. กลุ่มเป้าหมายยุทธศาสตร์ (Target User Personas)
+##  2. กลุ่มเป้าหมายยุทธศาสตร์ (Target User Personas)
 
 โมเดล **Behavioral Clustering (K-Means / GMM)** ทำการจัดกลุ่มลูกค้า First Jobber ออกเป็น 2 กลุ่มหลัก:
 
@@ -43,21 +33,21 @@ pinned: false
 
 ---
 
-## 💡 3. นวัตกรรมโซลูชัน (Proposed Solutions)
+##  3. นวัตกรรมโซลูชัน (Proposed Solutions)
 
-### 💰 WealthPilot (Autonomous Cashflow Copilot)
+###  WealthPilot (Autonomous Cashflow Copilot)
 * **Automated Payroll Detection & Safe-to-Spend:** ตรวจจับเงินเดือนเข้า แยกภาระค่าใช้จ่ายคงที่ (ค่าเช่าห้อง, หนี้ผ่อนชำระ EMI, ค่าน้ำไฟ) และคำนวณวงเงินใช้จ่ายปลอดภัยรายวัน (Daily Disposable Limit)
 * **Dynamic Micro-Sweeping & Protected Vault:** กวาดเศษเงินส่วนเกินสภาพคล่องเข้าบัญชีดอกเบี้ยสูง K-eSavings อัตโนมัติ พร้อมฝากเข้า "Protected Vault" (ดอกเบี้ย 1.50% ต่อปี) ที่มีมาตรการ Heightened Withdrawal Friction หน่วงเวลา 15 นาทีเพื่อปกป้องเงินเก็บก้อนแรก
 * **30-Day Liquidity Forecasting:** ใช้โมเดล Time-Series ONNX LightGBM คาดการณ์แนวโน้มกระแสเงินสดล่วงหน้า 30 วันจนถึงวันเงินเดือนออก
 
-### 🛡️ K-Sentinel (Context-Aware Scam Shield)
+###  K-Sentinel (Context-Aware Scam Shield)
 * **Pre-Transaction Graph Screening (<80ms):** สกัดกั้นปลายทางการโอนเงินและตรวจจับพฤติกรรมผิดปกติ (เช่น การลองโอนเงินก้อนเล็กแล้วตามด้วยก้อนใหญ่เข้าบัญชีม้าใน Task Scam) ภายในเวลาไม่ถึง 10 ms (วัดจริง P99 = 11.62ms)
 * **Counterfactual Explainable AI (XAI):** แสดงเหตุผลความเสี่ยงที่เข้าใจง่าย พร้อมให้คำแนะนำลดความเสี่ยง (เช่น "บัญชีปลายทางเพิ่งเปิดใหม่ 21 วัน และมีพฤติกรรมรับเงินแล้วโอนออกทันทีภายใน 19 วินาที แนะนำยืนยันด้วย Face Scan หรือโอนต่ำกว่า 500 บาท")
 * **Dynamic Step-up Friction:** บังคับสแกนใบหน้าสด (**WebRTC Biometric Face Liveness**) หรือเริ่มนับถอยหลัง **15-Minute Dynamic Cool-Off Window** ทันที เพื่อทำลายภาวะการถูกบีบคั้นจิตวิทยา (Disrupt Psychological Coercion)
 
 ---
 
-## 🧭 4. โครงสร้างการนำทาง (React Router 6 Multi-Page Navigation)
+##  4. โครงสร้างการนำทาง (React Router 6 Multi-Page Navigation)
 
 ฝั่ง Frontend ถูกออกแบบตามสถาปัตยกรรม Single Page Application (SPA) ยุคใหม่ โดยใช้ **React 18 + React Router v6** แบ่งหน้าการทำงานออกเป็นโมดูลอิสระ:
 
@@ -72,7 +62,7 @@ pinned: false
 
 ---
 
-## 🏛️ 5. สถาปัตยกรรมระบบ (Two-Tier Low-Latency Architecture)
+##  5. สถาปัตยกรรมระบบ (Two-Tier Low-Latency Architecture)
 
 ```mermaid
 graph TD
@@ -89,16 +79,16 @@ graph TD
     end
 
     subgraph "Tier 3: Client Experience & Web SPAs"
-        API --> ReactRouter["⚛️ React 18 + React Router 6 SPA (Port 5173)"]
-        API --> WebMobile["📱 K PLUS Mobile Banking Viewport (Port 8000)"]
-        API --> WebSecOps["🏛️ Bank Fraud SecOps Command Center"]
-        API --> WebCASA["📈 CASA Growth & Business Simulator"]
+        API --> ReactRouter[" React 18 + React Router 6 SPA (Port 5173)"]
+        API --> WebMobile[" K PLUS Mobile Banking Viewport (Port 8000)"]
+        API --> WebSecOps[" Bank Fraud SecOps Command Center"]
+        API --> WebCASA[" CASA Growth & Business Simulator"]
     end
 ```
 
 ---
 
-## ⚡ 6. ผลการทดสอบประสิทธิภาพ (Benchmark & SLA Verification)
+##  6. ผลการทดสอบประสิทธิภาพ (Benchmark & SLA Verification)
 
 ทดสอบ 200 รอบผ่าน `src/benchmark_latency.py`:
 
@@ -112,7 +102,7 @@ graph TD
 
 ---
 
-## 💼 7. ผลกระทบทางธุรกิจและมูลค่า (Business Impact & Value Proposition)
+##  7. ผลกระทบทางธุรกิจและมูลค่า (Business Impact & Value Proposition)
 
 * **CASA Deposit Growth:** กวาดเงินฝากต้นทุนต่ำเข้าสู่ระบบ KBank ได้ **1.2 – 2.0 พันล้านบาท (Billion THB)** จากฐานผู้ใช้ First Jobbers 3.2 ล้านคน
 * **Fraud Operational Cost Reduction:** ลดต้นทุนคดีความทางกฎหมาย การชดเชยความเสียหาย และลดภาระการอายัดบัญชีผ่าน AOC 1441
@@ -120,7 +110,7 @@ graph TD
 
 ---
 
-## 🚀 8. วิธีการติดตั้งและเปิดใช้งาน (Quick Start Guide)
+##  8. วิธีการติดตั้งและเปิดใช้งาน (Quick Start Guide)
 
 ### ความต้องการของระบบ (Prerequisites)
 - **Python**: 3.10 ขึ้นไป (แนะนำ Python 3.11 - 3.13)
@@ -175,13 +165,13 @@ docker run -p 8000:8000 k-sentinel-wealthpilot
 
 ---
 
-## 📂 9. โครงสร้างโฟลเดอร์โปรเจกต์ (Project Structure)
+##  9. โครงสร้างโฟลเดอร์โปรเจกต์ (Project Structure)
 
 ```
 K-Sentinel-and-WealthPilot/
 │
 ├── frontend/                          # โมดูลฝั่ง Frontend
-│   ├── react-app/                     # ⚛️ React 18 + React Router 6 Modular App
+│   ├── react-app/                     # React 18 + React Router 6 Modular App
 │   │   ├── package.json               # Dependencies (React Router, Lucide, Tailwind)
 │   │   ├── vite.config.js             # Vite Config พร้อม Backend Proxy
 │   │   ├── tailwind.config.js         # KBank Emerald Theme Configuration
