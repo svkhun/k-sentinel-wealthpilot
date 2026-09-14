@@ -218,7 +218,7 @@ K-Sentinel-and-WealthPilot/
 
 ---
 
-## 🏆 KBTG Kampus Hackathon 2026 Team
+##  KBTG Kampus Hackathon 2026 Team
 * **Project:** K-Sentinel & WealthPilot (K PLUS for First Jobbers)
 * **Track:** Track 2 — Data Science & Intelligence
 * **Repository:** [https://github.com/svkhun/k-sentinel-wealthpilot.git](https://github.com/svkhun/k-sentinel-wealthpilot.git)
