@@ -58,9 +58,7 @@ export default function Navbar() {
         {/* Action Button & Mobile Toggle */}
         <div className="flex items-center gap-3">
           <a
-            href="http://localhost:8000/app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/app"
             className="hidden sm:inline-flex items-center gap-2 bg-[#00A950] hover:bg-[#008F43] text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 transition-all hover:scale-[1.02]"
           >
             <span>เปิดแอปจำลอง (Simulator)</span>
@@ -101,9 +99,7 @@ export default function Navbar() {
               </NavLink>
             ))}
             <a
-              href="http://localhost:8000/app"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/app"
               onClick={() => setMobileMenuOpen(false)}
               className="inline-flex items-center justify-center gap-2 bg-[#00A950] text-white px-4 py-3 rounded-xl font-bold text-sm mt-2"
             >
