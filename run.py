@@ -66,16 +66,20 @@ if __name__ == "__main__":
     print("  KBTG Kampus Hackathon 2026 — Track 2: Data Science & Intelligence")
     print("==================================================================")
     
-    # Start Port 80 gateway in background thread
-    p80_thread = threading.Thread(target=start_port80_gateway, args=(8000,), daemon=True)
-    p80_thread.start()
-    time.sleep(0.3)
-
-    # Determine launch URL (Prefer clean Port 80)
-    launch_url = "http://localhost/"
+    # Read PORT from environment (default 8000 for local, dynamic on Render)
+    target_port = int(os.environ.get("PORT", 8000))
     
-    if "--no-browser" not in sys.argv:
+    # Start Port 80 gateway in background thread (local only)
+    if target_port == 8000:
+        p80_thread = threading.Thread(target=start_port80_gateway, args=(8000,), daemon=True)
+        p80_thread.start()
+        time.sleep(0.3)
+
+    # Determine launch URL
+    launch_url = f"http://localhost:{target_port}/" if target_port != 8000 else "http://localhost/"
+    
+    if "--no-browser" not in sys.argv and "RENDER" not in os.environ:
         threading.Thread(target=open_browser, args=(launch_url,), daemon=True).start()
     
-    # Run FastAPI server on 0.0.0.0:8000
-    uvicorn.run("src.app_v2:app", host="0.0.0.0", port=8000, reload=False)
+    # Run FastAPI server on 0.0.0.0:target_port
+    uvicorn.run("src.app_v2:app", host="0.0.0.0", port=target_port, reload=False)
