@@ -13,7 +13,8 @@ pinned: false
 > **KBTG Kampus Hackathon 2026 — Track 2: Data Science & Intelligence**  
 > *A unified digital banking copilot on K PLUS integrating autonomous cashflow optimization with sub-80ms real-time relational graph intelligence.*
 
-[![Latency SLA](https://img.shields.io/badge/Latency_SLA-P99_%3C_11.62ms_(Target_%3C_80ms)-00A950?style=for-the-badge&logo=fastapi)](http://localhost:8000)
+[![Live Cloud Demo](https://img.shields.io/badge/Live_Cloud_Demo-Render.com-46E3B7?style=for-the-badge&logo=render)](https://k-sentinel-wealthpilot.onrender.com/)
+[![Latency SLA](https://img.shields.io/badge/Latency_SLA-P99_%3C_11.62ms_(Target_%3C_80ms)-00A950?style=for-the-badge&logo=fastapi)](https://k-sentinel-wealthpilot.onrender.com/)
 [![Inference Engine](https://img.shields.io/badge/Inference_Engine-ONNX_Runtime_v1.30-blue?style=for-the-badge&logo=onnx)](https://onnxruntime.ai/)
 [![Graph Neural Network](https://img.shields.io/badge/Graph_Model-PyG_Relational_GCN-orange?style=for-the-badge&logo=pytorch)](https://pyg.org/)
 [![Frontend Architecture](https://img.shields.io/badge/Frontend-React_18_%7C_React_Router_6_%7C_Vite-61DAFB?style=for-the-badge&logo=react)](http://localhost:5173)
@@ -125,6 +126,12 @@ graph TD
 - **Python**: 3.10 ขึ้นไป (แนะนำ Python 3.11 - 3.13)
 - **Node.js**: 18.0 ขึ้นไป (สำหรับการรัน React Router Dev Server)
 - **Git**: สำหรับดึงโค้ดและ Clone Repository
+
+### ทางเลือกที่ 0: ใช้งานจริงผ่านระบบ Cloud (Live Production Demo)
+เข้าชมระบบจริงที่เปิดให้บริการบน Render.com ได้ทันทีโดยไม่ต้องติดตั้งในเครื่อง:
+- **หน้าหลัก (Home / Product Showcase):** [https://k-sentinel-wealthpilot.onrender.com/](https://k-sentinel-wealthpilot.onrender.com/)
+- **หน้าแอปจำลอง (Interactive App & Simulator):** [https://k-sentinel-wealthpilot.onrender.com/app](https://k-sentinel-wealthpilot.onrender.com/app)
+- **หน้า Swagger API:** [https://k-sentinel-wealthpilot.onrender.com/docs](https://k-sentinel-wealthpilot.onrender.com/docs)
 
 ---
 

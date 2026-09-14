@@ -53,6 +53,13 @@ def serve_app_page():
         return FileResponse(index_path)
     return {"status": "App dashboard not found", "path": index_path}
 
+@app.get("/favicon.ico", include_in_schema=False)
+def serve_favicon():
+    favicon_svg = os.path.join(FRONTEND_DIR, "img", "favicon.svg")
+    if os.path.exists(favicon_svg):
+        return FileResponse(favicon_svg, media_type="image/svg+xml")
+    return {"status": "Favicon not found"}
+
 
 # ==============================================================================
 # 1. MODEL SESSIONS & FEATURE STORES (IN-MEMORY TIER 1)
