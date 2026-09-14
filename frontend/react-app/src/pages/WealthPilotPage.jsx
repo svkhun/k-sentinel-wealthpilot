@@ -13,8 +13,8 @@ export default function WealthPilotPage() {
           <div className="absolute -right-16 -top-16 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
           
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-semibold shadow-sm backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span>
               <span>Autonomous Cashflow Copilot</span>
             </div>
             
@@ -46,12 +46,13 @@ export default function WealthPilotPage() {
 
       {/* Deep-Dive Technical Pillars */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
-            Under The Hood
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-            3 กลไกอัจฉริยะของ WealthPilot
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-3.5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-semibold shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <span>3 กลไกอัจฉริยะ (Under The Hood)</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+            การทำงานเบื้องหลังของ WealthPilot
           </h2>
           <p className="text-sm text-slate-400">
             ผสานการคำนวณแบบ Real-time และโมเดล Machine Learning เพื่อสร้างวินัยการเงินโดยไม่ต้องจดบันทึก

@@ -12,8 +12,8 @@ export default function PersonasPage() {
           <div className="absolute -right-16 -top-16 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
           
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
-              <Users className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-semibold shadow-sm backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24] animate-pulse"></span>
               <span>Target Audience Intelligence</span>
             </div>
             
@@ -36,10 +36,11 @@ export default function PersonasPage() {
 
       {/* Business Value Cards */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
-            Strategic Value
-          </span>
+        <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-semibold shadow-sm">
+            <Target className="w-3.5 h-3.5 text-emerald-400" />
+            <span>ผลกระทบเชิงกลยุทธ์ (Strategic Value)</span>
+          </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">ผลกระทบเชิงธุรกิจต่อธนาคารกสิกรไทย</h2>
         </div>
 

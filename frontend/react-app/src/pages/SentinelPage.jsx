@@ -12,8 +12,8 @@ export default function SentinelPage({ onOpenScamModal }) {
           <div className="absolute -right-16 -top-16 w-80 h-80 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
           
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-wider">
-              <ShieldAlert className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs font-semibold shadow-sm backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_8px_#fb7185] animate-pulse"></span>
               <span>Real-Time Relational Graph AI</span>
             </div>
             
@@ -43,7 +43,7 @@ export default function SentinelPage({ onOpenScamModal }) {
 
       {/* Main Interactive Card */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScamShieldCard onOpenScamModal={onOpenScamModal} />
+        <ScamShieldCard onOpenScamModal={onOpenScamModal} showHeader={false} />
       </section>
 
       {/* Latency Benchmark SLA Table */}
@@ -51,11 +51,11 @@ export default function SentinelPage({ onOpenScamModal }) {
         <div className="glass-card rounded-3xl p-8 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1">
-                <Zap className="w-4 h-4" />
-                <span>Verified Benchmark (200 Iterations)</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-semibold mb-2">
+                <Zap className="w-3.5 h-3.5 text-emerald-400" />
+                <span>ผลการทดสอบ SLA ประสิทธิภาพ (200 Iterations Benchmark)</span>
               </div>
-              <h2 className="text-2xl font-bold text-white">ประสิทธิภาพความเร็วเทียบ SLA ธนาคาร</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white">ประสิทธิภาพความเร็วเทียบ SLA ธนาคาร</h2>
             </div>
             <span className="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono font-bold">
               Target SLA: &lt; 80.0 ms

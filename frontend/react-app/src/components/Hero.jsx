@@ -9,8 +9,8 @@ export default function Hero({ onOpenScamModal }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           <div className="lg:col-span-7 space-y-8">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-semibold">
-              <Sparkles className="w-4 h-4 text-emerald-300" />
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs sm:text-sm font-semibold shadow-sm backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span>
               <span>AI Copilot รุ่นใหม่บน K PLUS สำหรับกลุ่ม First Jobbers</span>
             </div>
 

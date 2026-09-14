@@ -1,20 +1,23 @@
 import React from 'react';
 import { Share2, User, AlertTriangle, Eye, AlertOctagon, Timer } from 'lucide-react';
 
-export default function ScamShieldCard({ onOpenScamModal }) {
+export default function ScamShieldCard({ onOpenScamModal, showHeader = true }) {
   return (
     <div className="space-y-12">
-      <div className="text-center max-w-5xl mx-auto space-y-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-red-500/10 border border-red-500/30 px-3.5 py-1.5 rounded-full">
-          Sub-80ms Graph AI Protection
-        </span>
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight whitespace-normal md:whitespace-nowrap">
-          K-Sentinel: เกราะสกัดกั้นบัญชีม้าความเร็วแสง
-        </h2>
-        <p className="text-sm sm:text-base text-slate-300 max-w-4xl mx-auto leading-relaxed">
-          สแกนความสัมพันธ์เครือข่ายบัญชีปลายทางแบบ Real-time วิเคราะห์โครงสร้างฟอกเงินและบัญชีม้าได้ทันที พร้อมอธิบายเหตุผลด้วย Counterfactual XAI
-        </p>
-      </div>
+      {showHeader && (
+        <div className="text-center max-w-4xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs font-semibold shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-rose-400 shadow-[0_0_8px_#fb7185] animate-pulse"></span>
+            <span>Sub-80ms Graph AI Protection</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+            K-Sentinel: เกราะสกัดกั้นบัญชีม้าความเร็วแสง
+          </h2>
+          <p className="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            สแกนความสัมพันธ์เครือข่ายบัญชีปลายทางแบบ Real-time วิเคราะห์โครงสร้างฟอกเงินและบัญชีม้าได้ทันที พร้อมอธิบายเหตุผลด้วย Counterfactual XAI
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-6 glass-card rounded-3xl p-8 space-y-6">

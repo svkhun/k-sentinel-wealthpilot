@@ -37,15 +37,15 @@ export default function ArchitecturePipeline() {
     <section id="architecture" className="py-20 bg-[#0E1524]/40 border-y border-white/[0.08]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-5xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>Production Architecture</span>
+        <div className="text-center max-w-5xl mx-auto mb-14 space-y-3.5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-300 text-xs font-semibold shadow-sm">
+            <Cpu className="w-3.5 h-3.5 text-blue-400" />
+            <span>สถาปัตยกรรมข้อมูลระดับ Production</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight whitespace-normal md:whitespace-nowrap">
-            สถาปัตยกรรม Data Science ระดับ Production
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+            Pipeline ประมวลผลธุรกรรมความเร็วสูง
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto leading-relaxed">
             ออกแบบตามมาตรฐานธนาคารพาณิชย์ รองรับปริมาณคำสั่งโอนเงินมหาศาลด้วย SLA ต่ำกว่า 80ms
           </p>
         </div>

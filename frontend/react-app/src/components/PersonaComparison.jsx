@@ -6,11 +6,15 @@ export default function PersonaComparison() {
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-5xl mx-auto mb-16 space-y-3">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight whitespace-normal md:whitespace-nowrap">
+        <div className="text-center max-w-5xl mx-auto mb-14 space-y-3.5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-semibold shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span>
+            <span>Before &amp; After Impact Storyboard</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
             ผลลัพธ์ที่เปลี่ยนไปของ First Jobber
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto leading-relaxed">
             เปรียบเทียบชีวิตการเงินก่อนและหลังเปิดใช้งาน K-Sentinel &amp; WealthPilot
           </p>
         </div>
