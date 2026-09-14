@@ -36,17 +36,17 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden lg:flex items-center gap-7 text-sm font-medium">
+        <div className="hidden lg:flex items-center gap-2 text-sm font-medium">
           {navLinks.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
               end={link.to === '/'}
               className={({ isActive }) =>
-                `transition-all py-1 border-b-2 ${
+                `transition-all py-1.5 px-3 rounded-xl text-sm font-medium outline-none focus:outline-none ring-0 ${
                   isActive
-                    ? 'text-emerald-400 font-bold border-emerald-400'
-                    : 'text-slate-300 hover:text-white border-transparent'
+                    ? 'text-emerald-400 font-bold bg-emerald-500/15 border border-emerald-500/25 shadow-sm'
+                    : 'text-slate-300 hover:text-white hover:bg-white/[0.04]'
                 }`
               }
             >
@@ -57,18 +57,18 @@ export default function Navbar() {
 
         {/* Action Button & Mobile Toggle */}
         <div className="flex items-center gap-3">
-          <a
-            href="/app"
-            className="hidden sm:inline-flex items-center gap-2 bg-[#00A950] hover:bg-[#008F43] text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 transition-all hover:scale-[1.02]"
+          <Link
+            to="/app"
+            className="hidden sm:inline-flex items-center gap-2 bg-[#00A950] hover:bg-[#008F43] text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 transition-all hover:scale-[1.02] outline-none focus:outline-none ring-0"
           >
             <span>เปิดแอปจำลอง (Simulator)</span>
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </Link>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-200 hover:text-white"
+            className="lg:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-200 hover:text-white outline-none focus:outline-none"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -88,7 +88,7 @@ export default function Navbar() {
                 end={link.to === '/'}
                 onClick={() => setMobileMenuOpen(false)}
                 className={({ isActive }) =>
-                  `px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  `px-4 py-2.5 rounded-xl text-sm font-medium transition-colors outline-none focus:outline-none ring-0 ${
                     isActive
                       ? 'bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30'
                       : 'text-slate-300 hover:bg-white/5'
@@ -98,14 +98,14 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
-            <a
-              href="/app"
+            <Link
+              to="/app"
               onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center justify-center gap-2 bg-[#00A950] text-white px-4 py-3 rounded-xl font-bold text-sm mt-2"
+              className="inline-flex items-center justify-center gap-2 bg-[#00A950] text-white px-4 py-3 rounded-xl font-bold text-sm mt-2 outline-none focus:outline-none ring-0"
             >
               <span>เปิดแอปจำลอง (Simulator)</span>
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </div>
       )}

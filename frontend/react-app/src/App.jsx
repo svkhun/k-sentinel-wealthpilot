@@ -11,6 +11,7 @@ import WealthPilotPage from './pages/WealthPilotPage';
 import SentinelPage from './pages/SentinelPage';
 import ArchitecturePage from './pages/ArchitecturePage';
 import PersonasPage from './pages/PersonasPage';
+import SimulatorPage from './pages/SimulatorPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
@@ -46,6 +47,14 @@ export default function App() {
           <Route
             path="/personas"
             element={<PersonasPage />}
+          />
+          <Route
+            path="/app"
+            element={<SimulatorPage />}
+          />
+          <Route
+            path="/simulator"
+            element={<SimulatorPage />}
           />
           <Route
             path="*"
