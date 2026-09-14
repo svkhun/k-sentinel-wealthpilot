@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'IBM Plex Sans Thai', 'Plus Jakarta Sans', sans-serif;
+  background-color: #070B12;
+  color: #F8FAFC;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0, 169, 80, 0.18), transparent),
+    radial-gradient(ellipse 60% 40% at 85% 45%, rgba(16, 185, 129, 0.1), transparent),
+    radial-gradient(ellipse 50% 30% at 15% 75%, rgba(14, 165, 233, 0.08), transparent);
+  background-attachment: fixed;
+}
+
+.glass-card {
+  background: rgba(14, 21, 36, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card:hover {
+  border-color: rgba(0, 169, 80, 0.45);
+  box-shadow: 0 16px 40px -4px rgba(0, 169, 80, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.font-num {
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+}

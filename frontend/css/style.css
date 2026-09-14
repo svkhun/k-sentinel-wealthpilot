@@ -1,197 +1,890 @@
-@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --kbank-green: #00A950;
-  --kbank-green-hover: #008F43;
-  --kbank-dark-green: #005A2B;
-  --kbank-deep-forest: #064E3B;
-  --kbank-navy: #0F172A;
-  --kbank-slate: #1E293B;
-  --kbank-border: #334155;
-  --kbank-gold: #F59E0B;
-  --kbank-red: #EF4444;
+  /* Official KBank Brand Tokens */
+  --kplus-green: #00A950;
+  --kplus-green-hover: #008F43;
+  --kplus-green-dark: #00602E;
+  --kplus-forest: #004220;
+  --kplus-glow: rgba(0, 169, 80, 0.28);
+  --kplus-gold: #F59E0B;
+  --kplus-rose: #F43F5E;
+  --kplus-sky: #0EA5E9;
+  
+  /* Canvas & Elevated Surfaces (Linear / Stripe Inspired FinTech Palette) */
+  --bg-deep: #080C14;
+  --bg-surface: #0E1524;
+  --bg-card: rgba(17, 24, 39, 0.72);
+  --bg-card-hover: rgba(26, 36, 56, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-card: rgba(255, 255, 255, 0.1);
+  --border-active: rgba(0, 169, 80, 0.45);
+  
+  /* Typography */
+  --font-sans: 'Prompt', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Prompt', 'Inter', sans-serif;
-  background-color: #0B1120;
-  color: #F8FAFC;
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: #F1F5F9;
   overflow-x: hidden;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 169, 80, 0.14), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 60%, rgba(14, 165, 233, 0.06), transparent);
+  background-attachment: fixed;
 }
 
-/* Custom Scrollbars */
+/* Tabular numbers for all financial figures */
+.font-tnum,
+[id*="balance"],
+[id*="amount"],
+[id*="salary"],
+[id*="limit"],
+[id*="kpi"],
+[id*="rate"],
+[id*="timer"],
+[id*="clock"] {
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom Refined Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #0F172A;
+  background: rgba(14, 21, 36, 0.6);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 4px;
+  background: #2A364E;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00A950;
+  background: var(--kplus-green);
 }
 
-/* K PLUS Mobile Phone Bezel */
-.mobile-device {
-  width: 100%;
-  max-width: 420px;
-  background: #0F172A;
-  border: 10px solid #1E293B;
-  border-radius: 44px;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-  position: relative;
-  margin: 0 auto;
-}
-
-.mobile-notch {
-  width: 140px;
-  height: 22px;
-  background: #1E293B;
-  margin: 0 auto;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.mobile-camera-lens {
-  width: 8px;
-  height: 8px;
-  background: #0B1120;
-  border-radius: 50%;
-  border: 1px solid #334155;
-}
-
-/* K PLUS Digital Card */
-.kplus-debit-card {
-  background: linear-gradient(135deg, #00A950 0%, #006837 55%, #064E3B 100%);
+/* ============================================================================== */
+/* LUXURY FINTECH GLASS PANEL SYSTEM                                              */
+/* ============================================================================== */
+.fintech-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-card);
   border-radius: 20px;
-  padding: 22px;
-  color: white;
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.fintech-panel-hover:hover {
+  border-color: var(--border-active);
+  box-shadow: 0 12px 36px -4px rgba(0, 169, 80, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-1.5px);
+}
+
+/* ============================================================================== */
+/* IPHONE 16 PRO FLAGSHIP DEVICE MOCKUP                                          */
+/* ============================================================================== */
+.iphone-frame {
+  width: 100%;
+  max-width: 392px;
+  background: #0B0F19;
+  border: 11px solid #1A2234;
+  border-radius: 54px;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 25px 60px -12px rgba(0, 0, 0, 0.85),
+    0 0 80px -20px rgba(0, 169, 80, 0.2);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 28px -6px rgba(0, 169, 80, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: transform 0.2s ease;
+  margin: 0 auto;
+  user-select: none;
 }
 
-.kplus-debit-card:hover {
-  transform: translateY(-2px);
-}
-
-.kplus-debit-card::after {
+/* Device Side Reflections (Matte Titanium Aesthetic) */
+.iphone-frame::before {
   content: "";
   position: absolute;
-  top: -50px;
-  right: -50px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 43px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: 40;
+}
+
+/* Dynamic Island Pill */
+.dynamic-island {
+  width: 122px;
+  height: 28px;
+  background: #000000;
+  border-radius: 20px;
+  margin: 9px auto 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 50;
+  cursor: pointer;
+}
+
+.dynamic-island:hover {
   width: 160px;
-  height: 160px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
+  transform: scale(1.02);
+}
+
+.dynamic-island .camera-dot {
+  width: 10px;
+  height: 10px;
+  background: #0B1120;
+  border: 1.5px solid #1E293B;
   border-radius: 50%;
+  position: relative;
+}
+.dynamic-island .camera-dot::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #1E3A8A;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+}
+
+.dynamic-island .sensor-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Home Indicator Bar (iOS Style) */
+.iphone-home-indicator {
+  width: 130px;
+  height: 4.5px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 9999px;
+  margin: 10px auto 7px;
+  transition: background 0.2s;
+}
+.iphone-home-indicator:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* ============================================================================== */
+/* AUTHENTIC K-ESAVINGS DIGITAL CARD                                              */
+/* ============================================================================== */
+.kplus-card {
+  background: linear-gradient(135deg, #00A950 0%, #008744 42%, #004D25 100%);
+  border-radius: 22px;
+  padding: 20px 22px;
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 16px 36px -8px rgba(0, 169, 80, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.kplus-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 42px -6px rgba(0, 169, 80, 0.5);
+}
+
+/* Realistic Card Hologram Sheen */
+.kplus-card::before {
+  content: "";
+  position: absolute;
+  top: -80%;
+  left: -80%;
+  width: 260%;
+  height: 260%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 60%
+  );
+  transform: rotate(25deg);
   pointer-events: none;
 }
 
-/* Glassmorphic Panels */
-.glass-panel {
-  background: rgba(30, 41, 59, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
+/* Realistic Gold Contactless EMV Chip */
+.emv-chip {
+  width: 38px;
+  height: 28px;
+  background: linear-gradient(135deg, #FFDF73 0%, #E6B800 50%, #B38F00 100%);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.emv-chip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.25);
+}
+.emv-chip::before {
+  content: "";
+  position: absolute;
+  left: 45%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.25);
 }
 
-.glass-panel-interactive {
+/* Quick Action Circle Buttons (K PLUS Signature Style) */
+.kplus-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.kplus-action-btn:active {
+  transform: scale(0.92);
+}
+.kplus-action-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #E2E8F0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
-.glass-panel-interactive:hover {
-  border-color: rgba(0, 169, 80, 0.4);
+.kplus-action-btn:hover .kplus-action-icon {
+  background: var(--kplus-green);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 16px var(--kplus-glow);
   transform: translateY(-2px);
 }
 
-/* Pulsing Badge for Urgent Alerts */
-@keyframes pulse-siren {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
-  }
-}
-
-.pulse-alert {
-  animation: pulse-siren 1.5s infinite;
-}
-
-/* Circular Progress Dial for Safe-to-Spend */
-.progress-ring-circle {
-  transition: stroke-dashoffset 0.6s ease-in-out;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-}
-
-/* Network Graph Container */
-#mule-network-container {
-  width: 100%;
-  height: 520px;
-  background: #0F172A;
-  border-radius: 18px;
-  border: 1px solid #334155;
-  position: relative;
-}
-
-/* Video Camera Face Scan Frame */
-.camera-scanner-box {
-  position: relative;
-  width: 240px;
-  height: 240px;
-  margin: 0 auto;
-  border-radius: 50%;
+/* ============================================================================== */
+/* AUTHENTIC K PLUS E-SLIP (TRANSFER RECEIPT)                                    */
+/* ============================================================================== */
+.kplus-slip-modal {
+  background: #FFFFFF;
+  color: #0F172A;
+  border-radius: 28px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
   overflow: hidden;
-  border: 4px solid #00A950;
-  box-shadow: 0 0 25px rgba(0, 169, 80, 0.5);
+  position: relative;
+  font-family: var(--font-sans);
 }
 
-.scan-line {
+.kplus-slip-header {
+  background: linear-gradient(135deg, #00A950 0%, #007D3A 100%);
+  padding: 18px 24px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ============================================================================== */
+/* WEBRTC CAMERA SCANNER (BIOMETRIC FACE LIVENESS)                                */
+/* ============================================================================== */
+.camera-scanner-frame {
+  width: 220px;
+  height: 270px;
+  margin: 0 auto;
+  border-radius: 110px / 135px;
+  overflow: hidden;
+  position: relative;
+  border: 3.5px solid var(--kplus-green);
+  box-shadow: 0 0 30px var(--kplus-glow), inset 0 0 20px rgba(0, 169, 80, 0.2);
+  background: #000000;
+}
+
+.scanner-beam {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 4px;
-  background: #00A950;
-  box-shadow: 0 0 12px #00A950;
-  animation: scan-vertical 2s infinite linear;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00A950, #4ADE80, transparent);
+  box-shadow: 0 0 15px #00A950;
+  animation: scan-vertical-smooth 2.2s infinite ease-in-out;
 }
 
-@keyframes scan-vertical {
-  0% { top: 0%; }
-  50% { top: 96%; }
-  100% { top: 0%; }
+@keyframes scan-vertical-smooth {
+  0% { top: 3%; opacity: 0.2; }
+  50% { top: 94%; opacity: 1; }
+  100% { top: 3%; opacity: 0.2; }
 }
 
-/* Toast Notifications */
-.toast-box {
+/* Oval guidelines */
+.face-oval-guide {
+  position: absolute;
+  inset: 16px;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 95px / 120px;
+  pointer-events: none;
+}
+
+/* ============================================================================== */
+/* 15-MINUTE COOL-OFF BREATHING CIRCLE                                            */
+/* ============================================================================== */
+@keyframes calm-breathing {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.45);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 18px rgba(244, 63, 94, 0);
+    transform: scale(1.02);
+  }
+}
+
+.cooloff-breathing-ring {
+  animation: calm-breathing 2.5s infinite ease-in-out;
+}
+
+/* ============================================================================== */
+/* INTERACTIVE KAFKA LIVE FEED TICKER                                            */
+/* ============================================================================== */
+.kafka-row {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-left: 3px solid transparent;
+}
+.kafka-row:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-left-color: var(--kplus-green);
+  transform: translateX(3px);
+}
+
+/* ============================================================================== */
+/* SONNER-STYLE STACKED TOAST NOTIFICATIONS                                       */
+/* ============================================================================== */
+#toast-container {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 9999;
-  background: #1E293B;
-  border-left: 5px solid #00A950;
-  border-radius: 12px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-  padding: 14px 20px;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.modern-toast {
+  pointer-events: auto;
+  min-width: 320px;
+  max-width: 440px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   gap: 12px;
-  animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: toast-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s ease;
 }
 
-@keyframes slide-in {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+.modern-toast.success {
+  border-left: 4px solid var(--kplus-green);
 }
+
+.modern-toast.error {
+  border-left: 4px solid var(--kplus-rose);
+}
+
+.modern-toast.warning {
+  border-left: 4px solid var(--kplus-gold);
+}
+
+@keyframes toast-slide-up {
+  from {
+    transform: translateY(20px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================================================== */
+/* MICRO-SWEEP SPARKLE PARTICLES                                                 */
+/* ============================================================================== */
+.sparkle-btn {
+  position: relative;
+  overflow: hidden;
+}
+.sparkle-btn::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 80%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+.sparkle-btn:hover::after {
+  transform: translateX(100%);
+}
+
+/* ============================================================================== */
+/* VIS.JS RELATIONAL GRAPH CANVAS ENHANCEMENTS                                    */
+/* ============================================================================== */
+#mule-network-container {
+  width: 100%;
+  height: 520px;
+  background: radial-gradient(circle at 50% 50%, #111A2E 0%, #0B101D 100%);
+  border-radius: 20px;
+  border: 1px solid var(--border-card);
+  position: relative;
+}
+
+/* Floating Toolbar for Vis.js */
+.vis-floating-toolbar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vis-tool-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94A3B8;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.vis-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+.vis-tool-btn.active {
+  background: var(--kplus-green);
+  color: #FFFFFF;
+}
+
+/* Micro-slider thumb */
+input[type="range"] {
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: #1E293B;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--kplus-green);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--kplus-glow);
+  border: 2px solid #FFFFFF;
+  transition: transform 0.15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* ============================================================================== */
+/* 1-CLICK INTERACTIVE SCENARIOS STYLING                                          */
+/* ============================================================================== */
+.scenario-banner {
+  background: linear-gradient(135deg, rgba(14, 21, 36, 0.95) 0%, rgba(20, 30, 51, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.scenario-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00A950, #0EA5E9, #F59E0B, #F43F5E);
+}
+
+.scenario-card-btn {
+  background: rgba(14, 21, 36, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  padding: 16px 18px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scenario-card-btn:hover {
+  transform: translateY(-2.5px);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.4);
+}
+
+.scenario-card-btn.safe:hover {
+  border-color: rgba(0, 169, 80, 0.5);
+  background: rgba(0, 169, 80, 0.08);
+}
+
+.scenario-card-btn.mule:hover {
+  border-color: rgba(244, 63, 94, 0.5);
+  background: rgba(244, 63, 94, 0.08);
+}
+
+.scenario-card-btn.sweep:hover {
+  border-color: rgba(14, 165, 233, 0.5);
+  background: rgba(14, 165, 233, 0.08);
+}
+
+.scenario-card-btn:active {
+  transform: scale(0.98);
+}
+
+/* Badge tags inside scenario buttons */
+.scenario-step-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+/* ============================================================================== */
+/* [SYSTEM] ADVANCED FINTECH ANIMATIONS & GIMMICKS SYSTEM                         */
+/* ============================================================================== */
+
+/* 1. Fullscreen Particle Canvas Overlay */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999999;
+}
+
+/* 2. Reading Scroll Progress Bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #00A950, #10B981, #06B6D4, #3B82F6);
+  z-index: 99999;
+  width: 0%;
+  transition: width 0.08s ease-out;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.7);
+}
+
+/* 3. 3D Card Parallax Tilt & Holographic Reflection */
+.card-3d-wrap {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.kplus-card {
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.card-glint {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: radial-gradient(circle 140px at var(--glint-x, 50%) var(--glint-y, 50%), rgba(255, 255, 255, 0.32), transparent 75%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.kplus-card:hover .card-glint {
+  opacity: 1;
+}
+
+/* 4. Dynamic Island Spring Morphing */
+.dynamic-island {
+  transition: width 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25),
+              height 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25),
+              background 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.dynamic-island.expanded {
+  width: 290px !important;
+  height: 42px !important;
+  border-radius: 24px;
+  background: #060A12 !important;
+  padding: 0 14px;
+  box-shadow: 0 0 28px rgba(0, 169, 80, 0.4), 0 0 0 1.5px rgba(0, 169, 80, 0.45) !important;
+}
+
+.waveform-bar {
+  width: 3px;
+  border-radius: 9999px;
+  background: #00A950;
+  animation: soundwave 0.8s infinite ease-in-out alternate;
+}
+.waveform-bar:nth-child(2) { animation-delay: 0.15s; background: #34D399; }
+.waveform-bar:nth-child(3) { animation-delay: 0.3s; background: #06B6D4; }
+.waveform-bar:nth-child(4) { animation-delay: 0.45s; background: #00A950; }
+
+@keyframes soundwave {
+  0% { height: 4px; }
+  100% { height: 16px; }
+}
+
+/* 5. Real-Time Radar Screen Sweep */
+@keyframes radar-sweep {
+  0% { transform: translateY(-10px); opacity: 0; }
+  25% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateY(420px); opacity: 0; }
+}
+
+.screen-radar-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00A950, #4ADE80, transparent);
+  box-shadow: 0 0 16px #00A950;
+  animation: radar-sweep 1.2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 45;
+}
+
+/* 6. Authentic E-Slip Physical Drop */
+@keyframes slip-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9) rotate(-1.5deg);
+  }
+  65% {
+    transform: translateY(8px) scale(1.02) rotate(0.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+.slip-drop-anim {
+  animation: slip-drop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* 7. Rotating Conic Glow Border */
+@keyframes rotate-conic {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.conic-glow-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.conic-glow-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(transparent, rgba(0, 169, 80, 0.6), transparent 30%);
+  animation: rotate-conic 5s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 8. Shimmering Badge */
+.shimmer-badge {
+  background: linear-gradient(90deg, rgba(0, 169, 80, 0.15) 0%, rgba(16, 185, 129, 0.35) 50%, rgba(0, 169, 80, 0.15) 100%);
+  background-size: 200% 100%;
+  animation: shimmer-swipe 2.5s infinite linear;
+}
+
+@keyframes shimmer-swipe {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 9. Interactive Kafka Stream Entrance */
+@keyframes kafka-item-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-15px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.kafka-row-enter {
+  animation: kafka-item-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==============================================================================
+   [NAVBAR] ULTRA-SMOOTH SIDEBAR NAV BAR OPEN / CLOSE ANIMATIONS
+   ============================================================================== */
+
+/* Desktop Smooth Slide-Out / Slide-In */
+@media (min-width: 768px) {
+  #sidebar-nav {
+    transition: margin-left 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s ease !important;
+    will-change: margin-left, transform, opacity;
+  }
+
+  #sidebar-nav.sidebar-collapsed {
+    margin-left: -18rem !important; /* Smoothly collapses the width allocated in flex layout (md:w-72 = 18rem) */
+    transform: translateX(-24px) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  #sidebar-nav.sidebar-collapsed {
+    margin-left: -20rem !important; /* For lg:w-80 (20rem) */
+  }
+}
+
+/* Mobile Smooth Dropdown Accordion */
+@media (max-width: 767px) {
+  #sidebar-nav {
+    max-height: 2500px;
+    transition: max-height 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.3s ease,
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                padding 0.35s ease,
+                margin 0.35s ease !important;
+    overflow: hidden;
+  }
+
+  #sidebar-nav.sidebar-collapsed {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-width: 0 !important;
+    transform: translateY(-20px) !important;
+    pointer-events: none !important;
+  }
+}
+
+/* Staggered Content Animation inside Sidebar */
+#sidebar-nav > * {
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1) 0.05s,
+              transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
+}
+
+#sidebar-nav.sidebar-collapsed > * {
+  opacity: 0 !important;
+  transform: translateX(-16px) !important;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* Floating Expand Sidebar Button with Ambient Pulse & Slide Entrance */
+#btn-sidebar-expand {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.92);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              background-color 0.2s ease,
+              border-color 0.2s ease;
+  will-change: transform, opacity;
+}
+
+#btn-sidebar-expand.visible {
+  opacity: 1 !important;
+  transform: translateX(0) scale(1) !important;
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.7),
+              0 0 20px -2px rgba(0, 169, 80, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  animation: expand-btn-ambient 3s ease-in-out infinite alternate;
+}
+
+@keyframes expand-btn-ambient {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-2px) scale(1.02); }
+}
+
+#btn-sidebar-collapse {
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+#btn-sidebar-collapse:active {
+  transform: scale(0.88) rotate(-12deg) !important;
+}
+
+
+

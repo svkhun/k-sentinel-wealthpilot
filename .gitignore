@@ -22,3 +22,9 @@ Thumbs.db
 # Logs and temporary files
 *.log
 scratch/
+
+# Node / Frontend dependencies & build artifacts
+node_modules/
+dist/
+.vite/
+.eslintcache

@@ -32,12 +32,27 @@ app.add_middleware(
 if os.path.exists(FRONTEND_DIR):
     app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
+# ==============================================================================
+# FRONTEND HTML ROUTES (Intuitive Semantic URLs)
+# ==============================================================================
 @app.get("/", response_class=FileResponse)
-def serve_index_html():
+@app.get("/home", response_class=FileResponse)
+@app.get("/landing", response_class=FileResponse)
+def serve_home_page():
+    landing_path = os.path.join(FRONTEND_DIR, "landing.html")
+    if os.path.exists(landing_path):
+        return FileResponse(landing_path)
+    return {"status": "Home page not found", "path": landing_path}
+
+@app.get("/app", response_class=FileResponse)
+@app.get("/dashboard", response_class=FileResponse)
+@app.get("/simulation", response_class=FileResponse)
+def serve_app_page():
     index_path = os.path.join(FRONTEND_DIR, "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
-    return {"status": "Frontend not found", "path": index_path}
+    return {"status": "App dashboard not found", "path": index_path}
+
 
 # ==============================================================================
 # 1. MODEL SESSIONS & FEATURE STORES (IN-MEMORY TIER 1)
@@ -387,7 +402,8 @@ def get_daily_safe_to_spend(account_id: str):
 def forecast_cashflow_30d(account_id: str):
     """
     30-Day Liquidity Forecast via ONNX LightGBM Time-Series Model.
-    Predicts daily spending patterns, weekend spikes, and shows cash balance trajectory until payday.
+    Connects Real-time Present Anchor (Past 7 Days + Today + Future 22 Days),
+    reflecting actual current date/time, spending patterns, weekend spikes, and salary inflow.
     """
     if account_id not in BEHAVIORAL_PROFILES_CACHE:
         account_id = "ACC_0100"
@@ -401,21 +417,73 @@ def forecast_cashflow_30d(account_id: str):
     })
 
     now = datetime.now()
-    cur_balance = state["main_balance"]
+    cur_balance = float(state["main_balance"])
     salary = float(prof["monthly_salary"])
-    
-    daily_predictions = []
-    lag_1 = float(prof["avg_daily_spend"])
-    lag_3 = float(prof["avg_daily_spend"] * 0.95)
-    lag_7 = float(prof["avg_daily_spend"] * 1.05)
+    avg_spend = float(prof["avg_daily_spend"])
+    spent_today = float(state.get("daily_spent_today", avg_spend * 0.45))
 
-    cumulative_balance = cur_balance
+    # 1. Past 7 days historical actual transactions (reconstructed realistically from user profile)
+    past_points = []
+    running_past_bal = cur_balance + spent_today
+    past_spends = []
+    for p_step in range(1, 8):
+        p_date = now - timedelta(days=p_step)
+        is_wk = 1.0 if p_date.weekday() >= 5 else 0.0
+        factor = 1.28 if is_wk else (0.86 + (p_step % 3) * 0.08)
+        day_spend = round(avg_spend * factor, 2)
+        past_spends.append((p_date, is_wk, day_spend))
 
-    for step in range(30):
-        target_date = now + timedelta(days=step)
+    for p_date, is_wk, day_spend in past_spends:
+        running_past_bal += day_spend
+
+    temp_bal = running_past_bal
+    for p_date, is_wk, day_spend in reversed(past_spends):
+        temp_bal -= day_spend
+        past_points.append({
+            "date": p_date.strftime("%Y-%m-%d"),
+            "day_name": p_date.strftime("%a"),
+            "is_weekend": bool(is_wk),
+            "days_to_payday": (28 - p_date.day) if p_date.day <= 28 else (30 - p_date.day + 28),
+            "predicted_spend": day_spend,
+            "actual_spend": day_spend,
+            "salary_inflow": 0.0,
+            "projected_balance": round(temp_bal, 2),
+            "status": "PAST",
+            "is_past": True,
+            "is_today": False,
+            "is_future": False
+        })
+
+    # 2. Today's point (Current moment live anchor)
+    is_today_weekend = 1.0 if now.weekday() >= 5 else 0.0
+    dtp_today = (28 - now.day) if now.day <= 28 else (30 - now.day + 28)
+    today_point = {
+        "date": now.strftime("%Y-%m-%d"),
+        "day_name": now.strftime("%a"),
+        "is_weekend": bool(is_today_weekend),
+        "days_to_payday": int(dtp_today),
+        "predicted_spend": round(spent_today, 2),
+        "actual_spend": round(spent_today, 2),
+        "salary_inflow": 0.0,
+        "projected_balance": round(cur_balance, 2),
+        "status": "TODAY",
+        "is_past": False,
+        "is_today": True,
+        "is_future": False,
+        "current_time": now.strftime("%H:%M")
+    }
+
+    # 3. Future 22 days (AI LightGBM ONNX inference)
+    future_points = []
+    lag_1 = spent_today
+    lag_3 = float(avg_spend * 0.95)
+    lag_7 = float(avg_spend * 1.05)
+    cum_bal = cur_balance
+
+    for f_step in range(1, 23):
+        target_date = now + timedelta(days=f_step)
         is_weekend = 1.0 if target_date.weekday() >= 5 else 0.0
         
-        # Days to payday
         if target_date.day <= 28:
             dtp = float(28 - target_date.day)
         else:
@@ -427,32 +495,45 @@ def forecast_cashflow_30d(account_id: str):
         pred_spend = float(wealth_sess.run([wealth_out_name], {wealth_in_name: feat})[0][0][0])
         pred_spend = max(150.0, pred_spend)
 
-        # Apply salary inflow on 28th
         inflow = salary if target_date.day == 28 else 0.0
-        cumulative_balance = cumulative_balance - pred_spend + inflow
+        cum_bal = cum_bal - pred_spend + inflow
 
-        daily_predictions.append({
+        future_points.append({
             "date": target_date.strftime("%Y-%m-%d"),
             "day_name": target_date.strftime("%a"),
             "is_weekend": bool(is_weekend),
             "days_to_payday": int(dtp),
             "predicted_spend": round(pred_spend, 2),
+            "actual_spend": 0.0,
             "salary_inflow": inflow,
-            "projected_balance": round(cumulative_balance, 2)
+            "projected_balance": round(cum_bal, 2),
+            "status": "FUTURE",
+            "is_past": False,
+            "is_today": False,
+            "is_future": True
         })
 
-        # Roll forward lags
         lag_7 = lag_3
         lag_3 = lag_1
         lag_1 = pred_spend
 
-    min_proj_balance = min(p["projected_balance"] for p in daily_predictions)
+    full_timeline = past_points + [today_point] + future_points
+    min_proj_balance = min(p["projected_balance"] for p in full_timeline)
     is_safe = min_proj_balance > 1500.0
+
+    payday_target = now + timedelta(days=int(dtp_today))
 
     return {
         "account_id": account_id,
         "forecast_days": 30,
+        "today_index": len(past_points),
+        "current_datetime": now.strftime("%Y-%m-%d %H:%M:%S"),
+        "current_date": now.strftime("%Y-%m-%d"),
+        "current_time": now.strftime("%H:%M:%S"),
+        "days_to_payday": int(dtp_today),
+        "payday_date": payday_target.strftime("%Y-%m-%d"),
         "current_balance": round(cur_balance, 2),
+        "spent_today": round(spent_today, 2),
         "min_projected_balance": round(min_proj_balance, 2),
         "liquidity_health": "HEALTHY" if is_safe else "RISK_OF_DEFICIT",
         "projection_summary": (
@@ -460,7 +541,7 @@ def forecast_cashflow_30d(account_id: str):
             if is_safe
             else "ตรวจพบความเสี่ยงสภาพคล่องตึงตัวช่วง 3 วันก่อนเงินเดือนออก แนะนำเปิดใช้งาน Micro-sweeping"
         ),
-        "timeline": daily_predictions
+        "timeline": full_timeline
     }
 
 @app.post("/api/v2/wealthpilot/micro-sweep")
@@ -545,6 +626,30 @@ def withdraw_vault(payload: VaultWithdrawalRequest):
         "new_main_balance": round(state["main_balance"], 2),
         "new_vault_balance": round(state["vault_balance"], 2),
         "message": f"ถอนเงินจาก Protected Vault สำเร็จ ฿ {payload.amount:,.2f} เข้าสู่บัญชีหลัก"
+    }
+
+@app.post("/api/v2/wealthpilot/reset-state/{account_id}")
+def reset_account_state(account_id: str):
+    """
+    Reset live banking account balances & vault state back to initial profile defaults.
+    """
+    if account_id not in BEHAVIORAL_PROFILES_CACHE:
+        account_id = "ACC_0100"
+    
+    prof = BEHAVIORAL_PROFILES_CACHE[account_id]
+    LIVE_ACCOUNT_STATES[account_id] = {
+        "main_balance": float(prof["monthly_salary"] * 0.65),
+        "vault_balance": float(prof["initial_vault_savings"]),
+        "total_swept": 0.0,
+        "daily_spent_today": float(prof["avg_daily_spend"] * 0.45),
+        "last_sweep_ts": time.time()
+    }
+    return {
+        "status": "RESET_SUCCESS",
+        "account_id": account_id,
+        "main_balance": LIVE_ACCOUNT_STATES[account_id]["main_balance"],
+        "vault_balance": LIVE_ACCOUNT_STATES[account_id]["vault_balance"],
+        "message": f"รีเซ็ตยอดเงินและข้อมูลบัญชี {account_id} คืนค่าเริ่มต้นเรียบร้อยแล้ว"
     }
 
 # ==============================================================================

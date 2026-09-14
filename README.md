@@ -1,4 +1,14 @@
-#  K-Sentinel &  WealthPilot (K PLUS for First Jobbers)
+---
+title: K-Sentinel & WealthPilot
+emoji: 🛡️
+colorFrom: green
+colorTo: emerald
+sdk: docker
+app_port: 8000
+pinned: false
+---
+
+# 🛡️ K-Sentinel & 💰 WealthPilot (K PLUS for First Jobbers)
 
 > **KBTG Kampus Hackathon 2026 — Track 2: Data Science & Intelligence**  
 > *A unified digital banking copilot on K PLUS integrating autonomous cashflow optimization with sub-80ms real-time relational graph intelligence.*
@@ -6,11 +16,12 @@
 [![Latency SLA](https://img.shields.io/badge/Latency_SLA-P99_%3C_11.62ms_(Target_%3C_80ms)-00A950?style=for-the-badge&logo=fastapi)](http://localhost:8000)
 [![Inference Engine](https://img.shields.io/badge/Inference_Engine-ONNX_Runtime_v1.30-blue?style=for-the-badge&logo=onnx)](https://onnxruntime.ai/)
 [![Graph Neural Network](https://img.shields.io/badge/Graph_Model-PyG_Relational_GCN-orange?style=for-the-badge&logo=pytorch)](https://pyg.org/)
-[![Web Architecture](https://img.shields.io/badge/Frontend-Modern_SPA_WebRTC-slate?style=for-the-badge&logo=html5)](http://localhost:8000)
+[![Frontend Architecture](https://img.shields.io/badge/Frontend-React_18_%7C_React_Router_6_%7C_Vite-61DAFB?style=for-the-badge&logo=react)](http://localhost:5173)
+[![Styling](https://img.shields.io/badge/UI_System-Tailwind_CSS_%7C_Glassmorphism-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
 
 ---
 
-##  1. ปัญหาและความสำคัญ (Problem Statement)
+## 📌 1. ปัญหาและความสำคัญ (Problem Statement)
 
 กลุ่มคนเริ่มทำงาน หรือ **First Jobber (อายุ 22–30 ปี จำนวนกว่า 3.2 ล้านคนบน K PLUS)** กำลังเผชิญกับ 2 วิกฤตการณ์ทางการเงินที่ส่งผลกระทบต่อความมั่นคงในชีวิต:
 
@@ -20,7 +31,7 @@
 
 ---
 
-##  2. กลุ่มเป้าหมายยุทธศาสตร์ (Target User Personas)
+## 🎯 2. กลุ่มเป้าหมายยุทธศาสตร์ (Target User Personas)
 
 โมเดล **Behavioral Clustering (K-Means / GMM)** ทำการจัดกลุ่มลูกค้า First Jobber ออกเป็น 2 กลุ่มหลัก:
 
@@ -31,21 +42,36 @@
 
 ---
 
-##  3. นวัตกรรมโซลูชัน (Proposed Solutions)
+## 💡 3. นวัตกรรมโซลูชัน (Proposed Solutions)
 
-###  WealthPilot (Autonomous Cashflow Copilot)
+### 💰 WealthPilot (Autonomous Cashflow Copilot)
 * **Automated Payroll Detection & Safe-to-Spend:** ตรวจจับเงินเดือนเข้า แยกภาระค่าใช้จ่ายคงที่ (ค่าเช่าห้อง, หนี้ผ่อนชำระ EMI, ค่าน้ำไฟ) และคำนวณวงเงินใช้จ่ายปลอดภัยรายวัน (Daily Disposable Limit)
-* **Dynamic Micro-Sweeping & Protected Vault:** กวาดเศษเงินส่วนเกินสภาพคล่องเข้าบัญชีดอกเบี้ยสูง K-eSavings อัตโนมัติ พร้อมฝากเข้า "Protected Vault" ที่มีมาตรการ Heightened Withdrawal Friction หน่วงเวลา 24 ชั่วโมงเพื่อปกป้องเงินเก็บก้อนแรก
+* **Dynamic Micro-Sweeping & Protected Vault:** กวาดเศษเงินส่วนเกินสภาพคล่องเข้าบัญชีดอกเบี้ยสูง K-eSavings อัตโนมัติ พร้อมฝากเข้า "Protected Vault" (ดอกเบี้ย 1.50% ต่อปี) ที่มีมาตรการ Heightened Withdrawal Friction หน่วงเวลา 15 นาทีเพื่อปกป้องเงินเก็บก้อนแรก
 * **30-Day Liquidity Forecasting:** ใช้โมเดล Time-Series ONNX LightGBM คาดการณ์แนวโน้มกระแสเงินสดล่วงหน้า 30 วันจนถึงวันเงินเดือนออก
 
-###  K-Sentinel (Context-Aware Scam Shield)
-* **Pre-Transaction Graph Screening (<80ms):** สกัดกั้นปลายทางการโอนเงินและตรวจจับพฤติกรรมผิดปกติ (เช่น การลองโอนเงินก้อนเล็กแล้วตามด้วยก้อนใหญ่เข้าบัญชีม้าใน Task Scam) ภายในเวลาไม่ถึง 10 ms
+### 🛡️ K-Sentinel (Context-Aware Scam Shield)
+* **Pre-Transaction Graph Screening (<80ms):** สกัดกั้นปลายทางการโอนเงินและตรวจจับพฤติกรรมผิดปกติ (เช่น การลองโอนเงินก้อนเล็กแล้วตามด้วยก้อนใหญ่เข้าบัญชีม้าใน Task Scam) ภายในเวลาไม่ถึง 10 ms (วัดจริง P99 = 11.62ms)
 * **Counterfactual Explainable AI (XAI):** แสดงเหตุผลความเสี่ยงที่เข้าใจง่าย พร้อมให้คำแนะนำลดความเสี่ยง (เช่น "บัญชีปลายทางเพิ่งเปิดใหม่ 21 วัน และมีพฤติกรรมรับเงินแล้วโอนออกทันทีภายใน 19 วินาที แนะนำยืนยันด้วย Face Scan หรือโอนต่ำกว่า 500 บาท")
 * **Dynamic Step-up Friction:** บังคับสแกนใบหน้าสด (**WebRTC Biometric Face Liveness**) หรือเริ่มนับถอยหลัง **15-Minute Dynamic Cool-Off Window** ทันที เพื่อทำลายภาวะการถูกบีบคั้นจิตวิทยา (Disrupt Psychological Coercion)
 
 ---
 
-##  4. สถาปัตยกรรมระบบ (Two-Tier Low-Latency Architecture)
+## 🧭 4. โครงสร้างการนำทาง (React Router 6 Multi-Page Navigation)
+
+ฝั่ง Frontend ถูกออกแบบตามสถาปัตยกรรม Single Page Application (SPA) ยุคใหม่ โดยใช้ **React 18 + React Router v6** แบ่งหน้าการทำงานออกเป็นโมดูลอิสระ:
+
+| Path URL | หน้าเพจหลัก (Component) | จุดเด่นและฟังก์ชันการทำงาน |
+| :--- | :--- | :--- |
+| `/` | `HomePage.jsx` | หน้าภาพรวมระบบ (Executive Overview), Hero Section, Modular Navigation Cards, และ Live Previews |
+| `/wealthpilot` | `WealthPilotPage.jsx` | เจาะลึกฟีเจอร์บริหารเงิน: Interactive Safe-to-Spend Gauge, Micro-Sweeping Vault, และ 3 เสาหลักจัดการกระแสเงินสด |
+| `/sentinel` | `SentinelPage.jsx` | เจาะลึกเกราะสกัดโกง: Interactive Scam Shield Card, โมเดล XAI, ตารางเปรียบเทียบ Latency SLA ละเอียดยิบ |
+| `/architecture` | `ArchitecturePage.jsx` | แผนผัง Two-Tier Production Pipeline (Kafka -> RGCN -> Redis Feature Store -> ONNX Runtime) |
+| `/personas` | `PersonasPage.jsx` | วิเคราะห์ความแตกต่าง Before/After ของคนเริ่มทำงาน พร้อมประเมินผลกระทบเชิงธุรกิจต่อ KBank |
+| `*` | `NotFoundPage.jsx` | หน้า 404 Cyber-Fintech Error Page พร้อมปุ่มพากลับสู่หน้าหลัก |
+
+---
+
+## 🏛️ 5. สถาปัตยกรรมระบบ (Two-Tier Low-Latency Architecture)
 
 ```mermaid
 graph TD
@@ -61,8 +87,9 @@ graph TD
         LGBM --> XAI["Counterfactual Engine & Friction Decider"]
     end
 
-    subgraph "Client Portals (Modern Web SPA)"
-        API --> WebMobile["📱 K PLUS Mobile Banking Viewport"]
+    subgraph "Tier 3: Client Experience & Web SPAs"
+        API --> ReactRouter["⚛️ React 18 + React Router 6 SPA (Port 5173)"]
+        API --> WebMobile["📱 K PLUS Mobile Banking Viewport (Port 8000)"]
         API --> WebSecOps["🏛️ Bank Fraud SecOps Command Center"]
         API --> WebCASA["📈 CASA Growth & Business Simulator"]
     end
@@ -70,7 +97,7 @@ graph TD
 
 ---
 
-##  5. ผลการทดสอบประสิทธิภาพ (Benchmark & SLA Verification)
+## ⚡ 6. ผลการทดสอบประสิทธิภาพ (Benchmark & SLA Verification)
 
 ทดสอบ 200 รอบผ่าน `src/benchmark_latency.py`:
 
@@ -84,69 +111,111 @@ graph TD
 
 ---
 
-##  6. ผลกระทบทางธุรกิจและมูลค่า (Business Impact & Value Proposition)
+## 💼 7. ผลกระทบทางธุรกิจและมูลค่า (Business Impact & Value Proposition)
 
 * **CASA Deposit Growth:** กวาดเงินฝากต้นทุนต่ำเข้าสู่ระบบ KBank ได้ **1.2 – 2.0 พันล้านบาท (Billion THB)** จากฐานผู้ใช้ First Jobbers 3.2 ล้านคน
 * **Fraud Operational Cost Reduction:** ลดต้นทุนคดีความทางกฎหมาย การชดเชยความเสียหาย และลดภาระการอายัดบัญชีผ่าน AOC 1441
-* **Customer Lifetime Value (LTV):** สร้างความผูกพันและยกระดับ Daily Active Users (DAU) ของ K PLUS ตั้งแต่เริ่มทำงาน
+* **Customer Lifetime Value (LTV):** สร้างความผูกพันและยกระดับ Daily Active Users (DAU) ของ K PLUS ตั้งแต่วันแรกของการทำงาน
 
 ---
 
-##  7. วิธีการติดตั้งและเปิดใช้งาน (Quick Start Guide)
+## 🚀 8. วิธีการติดตั้งและเปิดใช้งาน (Quick Start Guide)
 
-### สิ่งที่ต้องเตรียม (Prerequisites)
-- Python 3.10+ (แนะนำ Python 3.13)
-- ติดตั้ง Dependencies ผ่าน Virtual Environment (`.venv`)
-
-### การรันระบบด้วยคำสั่งเดียว (Single-Command Launcher)
-```powershell
-# เปิดใช้งานระบบและเปิดเบราว์เซอร์อัตโนมัติที่ http://localhost:8000
-.\.venv\Scripts\python run.py
-```
-
-หรือรันผ่าน Uvicorn:
-```powershell
-.\.venv\Scripts\uvicorn src.app_v2:app --port 8000 --reload
-```
-
-เปิดเว็บเบราว์เซอร์เข้าไปที่: **[http://localhost:8000](http://localhost:8000)**
+### ความต้องการของระบบ (Prerequisites)
+- **Python**: 3.10 ขึ้นไป (แนะนำ Python 3.11 - 3.13)
+- **Node.js**: 18.0 ขึ้นไป (สำหรับการรัน React Router Dev Server)
+- **Git**: สำหรับดึงโค้ดและ Clone Repository
 
 ---
 
-##  8. โครงสร้างโฟลเดอร์โปรเจกต์ (Project Structure)
+### ทางเลือกที่ 1: One-Click Full Stack Launcher (Python + FastAPI)
+รันคำสั่งเดียว ระบบจะสตาร์ท FastAPI Server และเปิดบราวเซอร์ที่หน้า Landing Page อัตโนมัติ:
+
+```bash
+# บน Windows PowerShell หรือ Command Prompt
+python run.py
+```
+เปิดเว็บเบราว์เซอร์เข้าไปที่:
+- **หน้าหลัก (Home / Product Overview)**: [http://localhost:8000/](http://localhost:8000/)
+- **หน้าแอปจำลอง (Interactive App & Simulator)**: [http://localhost:8000/app](http://localhost:8000/app)
+
+---
+
+### ทางเลือกที่ 2: Modern React 18 + React Router 6 Dev Server (Vite)
+สำหรับนักพัฒนา Frontend ที่ต้องการสัมผัสความลื่นไหลระดับ Single Page Application และ Hot Module Replacement (HMR):
+
+```bash
+# เข้าโฟลเดอร์ React App
+cd frontend/react-app
+
+# ติดตั้งแพ็กเกจ (React, React Router 6, Vite, Tailwind CSS, Lucide)
+npm install
+
+# รัน Dev Server
+npm run dev
+```
+
+เปิดเว็บเบราว์เซอร์เข้าไปที่: **[http://localhost:5173](http://localhost:5173)**  
+*Vite Server ได้รับการตั้งค่า Reverse Proxy ไปยัง FastAPI Backend (Port 8000) สำหรับการเชื่อมต่อ API เรียบร้อยแล้ว*
+
+---
+
+### ทางเลือกที่ 3: รันด้วย Docker Container
+```bash
+docker build -t k-sentinel-wealthpilot .
+docker run -p 8000:8000 k-sentinel-wealthpilot
+```
+
+---
+
+## 📂 9. โครงสร้างโฟลเดอร์โปรเจกต์ (Project Structure)
 
 ```
 K-Sentinel-and-WealthPilot/
 │
-├── frontend/                          # เว็บไซต์จริงระดับอุตสาหกรรม (Modern Web SPA)
-│   ├── index.html                     # Responsive SPA (K PLUS Viewport & SecOps Portal)
-│   ├── css/style.css                  # KBank Design System, Card Neumorphism, Animations
-│   └── js/app.js                      # WebRTC Face Scan, Vis.js Graph, Chart.js, Timers
+├── frontend/                          # โมดูลฝั่ง Frontend
+│   ├── react-app/                     # ⚛️ React 18 + React Router 6 Modular App
+│   │   ├── package.json               # Dependencies (React Router, Lucide, Tailwind)
+│   │   ├── vite.config.js             # Vite Config พร้อม Backend Proxy
+│   │   ├── tailwind.config.js         # KBank Emerald Theme Configuration
+│   │   ├── public/                    # 3D Assets และรูปภาพประกอบ
+│   │   └── src/
+│   │       ├── main.jsx               # BrowserRouter Entry Point
+│   │       ├── App.jsx                # Route Definitions
+│   │       ├── pages/                 # หน้าเพจตาม Route (/wealthpilot, /sentinel, etc.)
+│   │       └── components/            # Reusable UI Components
+│   │
+│   ├── index.html                     # Responsive Mobile & SecOps Simulator
+│   ├── landing.html                   # Zero-build Standalone Showcase
+│   ├── css/style.css                  # KBank Design System Styles
+│   └── js/app.js                      # WebRTC Face Scan, Vis.js Graph Engine
 │
-├── src/                               # ซอร์สโค้ดเอนจินหลัก
-│   ├── app_v2.py                      # FastAPI Backend Gateway & ONNX Static Serving
-│   ├── benchmark_latency.py           # สคริปต์ทดสอบ Latency P50/P95/P99 เทียบ SLA 80ms
-│   ├── train_clustering.py            # โมเดล K-Means จำแนก 2 พฤติกรรม First Jobber
-│   ├── train_sentinel_two_tier.py     # RGCN + LightGBM Training Pipeline
-│   ├── train_wealthpilot_cashflow.py  # Time-Series Cashflow Regressor
-│   ├── export_to_onnx.py              # Export โมเดลสู่รูปแบบ ONNX Production
-│   └── sentinel_counterfactual.py     # Counterfactual XAI What-If Generator
+├── src/                               # ซอร์สโค้ด AI & Banking Gateway
+│   ├── app_v2.py                      # FastAPI Backend Gateway & ONNX Runtime Serving
+│   ├── benchmark_latency.py           # สคริปต์ทดสอบ Latency เทียบ SLA ธนาคาร (<80ms)
+│   ├── train_clustering.py            # โมเดล K-Means จัดกลุ่ม Personas
+│   ├── train_sentinel_two_tier.py     # Pipeline การเทรน Relational GCN + LightGBM
+│   ├── train_wealthpilot_cashflow.py  # Time-Series Cashflow Forecast Model
+│   ├── export_to_onnx.py              # ส่งออกโมเดลสู่มาตรฐาน ONNX Production
+│   └── sentinel_counterfactual.py     # Counterfactual Explainable AI (XAI) Engine
 │
-├── models/                            # โมเดล Machine Learning พร้อมใช้งาน (Production Models)
-│   ├── k_sentinel.onnx                # Pre-Transaction Classifier ONNX
-│   ├── wealthpilot.onnx               # 30-Day Liquidity Forecast ONNX
+├── models/                            # Production Machine Learning Models
+│   ├── k_sentinel.onnx                # Pre-Transaction Fraud Classifier (LightGBM)
+│   ├── wealthpilot.onnx               # 30-Day Liquidity Forecast Model
 │   ├── behavioral_kmeans.pkl          # Persona Clustering Model
 │   └── behavioral_scaler.pkl          # Feature Scaler
 │
 ├── data/                              # ชุดข้อมูลธุรกรรมและ Embeddings เครือข่าย
 │   ├── sentinel_node_embeddings.csv   # 16D RGCN Embeddings
-│   ├── sentinel_users_v2.csv          # ข้อมูลบัญชีผู้ใช้และบัญชีม้า
-│   ├── sentinel_transactions_v2.csv   # ข้อมูลธุรกรรมปกติและ Task Scam
-│   ├── wealthpilot_cashflow_v2.csv    # ข้อมูลกระแสเงินสดรายจ่ายและเงินเดือน
-│   └── user_behavioral_profiles.csv   # ผลลัพธ์การจัดกลุ่มพฤติกรรมลูกค้า
+│   ├── sentinel_users_v2.csv          # ข้อมูลบัญชีผู้ใช้และเครือข่ายบัญชีม้า
+│   ├── sentinel_transactions_v2.csv   # ข้อมูลประวัติธุรกรรม
+│   ├── wealthpilot_cashflow_v2.csv    # ข้อมูลกระแสเงินสดรายได้-รายจ่าย
+│   └── user_behavioral_profiles.csv   # ข้อมูลโปรไฟล์พฤติกรรมลูกค้า
 │
 ├── run.py                             # ตัวเปิดระบบอัตโนมัติ (One-Click Launcher)
-├── .gitignore                         # กำหนดไม่ให้ push .venv และไฟล์ขยะขึ้น GitHub
+├── Dockerfile                         # ไฟล์สำหรับ Containerize และ Deploy ขึ้น Cloud
+├── requirements.txt                   # รายการ Python Packages
+├── .gitignore                         # กำหนดไม่ให้ push cache/node_modules ขึ้น Git
 └── README.md                          # เอกสารโครงการฉบับสมบูรณ์
 ```
 
@@ -154,4 +223,5 @@ K-Sentinel-and-WealthPilot/
 
 ## 🏆 KBTG Kampus Hackathon 2026 Team
 * **Project:** K-Sentinel & WealthPilot (K PLUS for First Jobbers)
+* **Track:** Track 2 — Data Science & Intelligence
 * **Repository:** [https://github.com/svkhun/k-sentinel-wealthpilot.git](https://github.com/svkhun/k-sentinel-wealthpilot.git)
