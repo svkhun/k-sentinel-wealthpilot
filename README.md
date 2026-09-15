@@ -1,14 +1,4 @@
----
-title: K-Sentinel & WealthPilot
-emoji: 🛡️
-colorFrom: green
-colorTo: emerald
-sdk: docker
-app_port: 8000
-pinned: false
----
-
-# 🛡️ K-Sentinel & 💰 WealthPilot (K PLUS for First Jobbers)
+#  K-Sentinel &  WealthPilot (K PLUS for First Jobbers)
 
 > **KBTG Kampus Hackathon 2026 — Track 2: Data Science & Intelligence**  
 > *A unified digital banking copilot on K PLUS integrating autonomous cashflow optimization with sub-80ms real-time relational graph intelligence.*
@@ -22,7 +12,7 @@ pinned: false
 
 ---
 
-## 📌 1. Problem Statement & Industry Background
+##  1. Problem Statement & Industry Background
 
 Thailand's early-career workforce or **First Jobbers (aged 22–30, comprising over 3.2 million users on K PLUS)** are confronting two compounding financial vulnerabilities that jeopardize their long-term economic stability:
 
@@ -32,7 +22,7 @@ Thailand's early-career workforce or **First Jobbers (aged 22–30, comprising o
 
 ---
 
-## 🎯 2. Target Strategic Personas (Behavioral Clustering)
+##  2. Target Strategic Personas (Behavioral Clustering)
 
 Unsupervised **Behavioral Clustering (K-Means / GMM)** partitions the First Jobber user base into two primary strategic cohorts:
 
@@ -43,21 +33,21 @@ Unsupervised **Behavioral Clustering (K-Means / GMM)** partitions the First Jobb
 
 ---
 
-## 💡 3. Proposed Solutions
+##  3. Proposed Solutions
 
-### 💰 WealthPilot (Autonomous Cashflow Copilot)
+###  WealthPilot (Autonomous Cashflow Copilot)
 * **Automated Payroll Detection & Safe-to-Spend:** Automatically detects incoming salary deposits, quarantines fixed recurrent obligations (rent, debt EMI, utility bills), and continuously computes a daily disposable spending limit (Safe-to-Spend).
 * **Dynamic Micro-Sweeping & Protected Vault:** Automatically sweeps discretionary surplus and transaction round-ups into high-yield K-eSavings accounts and a specialized "Protected Vault" (1.50% p.a. APY) equipped with 15-minute withdrawal friction to safeguard initial savings.
 * **30-Day Liquidity Forecasting:** Employs an ONNX-quantized Time-Series LightGBM regressor to predict daily cash balance trajectories through the next payroll date, delivering proactive early warnings for anticipated liquidity deficits.
 
-### 🛡️ K-Sentinel (Context-Aware Scam Shield)
+###  K-Sentinel (Context-Aware Scam Shield)
 * **Pre-Transaction Graph Screening (<80ms):** Intercepts suspicious recipient accounts and detects anomalous behavioral topologies (e.g., small trial probing followed by rapid large transfers to newly minted mule accounts in Task Scams) in under 10ms (**Measured P99 = 11.62ms**).
 * **Counterfactual Explainable AI (XAI):** Generates transparent, human-interpretable risk rationales alongside actionable remediation pathways (e.g., *"Beneficiary account registered only 21 days ago with instant 19-second pass-through cashout; proceed via Biometric Face Verification or restrict transfer to under 500 THB"*).
 * **Dynamic Step-Up Friction:** Enforces real-time biometric liveness checks (**WebRTC Face Biometrics**) or initiates a **15-Minute Dynamic Cool-Off Window** to disrupt social engineering and psychological coercion.
 
 ---
 
-## 🧭 4. Frontend Architecture (React Router 6 Multi-Page Navigation)
+##  4. Frontend Architecture (React Router 6 Multi-Page Navigation)
 
 The frontend is engineered as an enterprise-grade Single Page Application (SPA) powered by **React 18 + React Router v6**, modularized into dedicated functional domains:
 
@@ -90,16 +80,16 @@ graph TD
     end
 
     subgraph "Tier 3: Client Experience & Web SPAs"
-        API --> ReactRouter["⚛️ React 18 + React Router 6 SPA (Port 5173 / Production Dist)"]
-        API --> WebMobile["📱 K PLUS Mobile Banking Viewport"]
-        API --> WebSecOps["🏛️ Bank Fraud SecOps Command Center"]
-        API --> WebCASA["📈 CASA Growth & Business Simulator"]
+        API --> ReactRouter[" React 18 + React Router 6 SPA (Port 5173 / Production Dist)"]
+        API --> WebMobile[" K PLUS Mobile Banking Viewport"]
+        API --> WebSecOps[" Bank Fraud SecOps Command Center"]
+        API --> WebCASA[" CASA Growth & Business Simulator"]
     end
 ```
 
 ---
 
-## ⚡ 6. Benchmark & SLA Verification
+##  6. Benchmark & SLA Verification
 
 Benchmarked over 200 consecutive inference cycles via `src/benchmark_latency.py`:
 
@@ -113,7 +103,7 @@ Benchmarked over 200 consecutive inference cycles via `src/benchmark_latency.py`
 
 ---
 
-## 💼 7. Business Impact & Strategic Value Creation
+##  7. Business Impact & Strategic Value Creation
 
 * **CASA Deposit Expansion:** Channels **1.2 – 2.0 Billion THB** in low-cost CASA deposits into KBank from an addressable base of 3.2 million First Jobbers.
 * **Fraud Operational Cost Reduction:** Drastically reduces legal liabilities, compensation payouts, and emergency account freeze workloads managed through AOC 1441.
@@ -121,7 +111,7 @@ Benchmarked over 200 consecutive inference cycles via `src/benchmark_latency.py`
 
 ---
 
-## 🚀 8. Quick Start & Deployment Guide
+##  8. Quick Start & Deployment Guide
 
 ### System Prerequisites
 - **Python**: 3.10+ (Recommended: Python 3.11 – 3.13)
@@ -179,13 +169,13 @@ docker run -p 8000:8000 k-sentinel-wealthpilot
 
 ---
 
-## 📂 9. Project Directory Structure
+##  9. Project Directory Structure
 
 ```
 K-Sentinel-and-WealthPilot/
 │
 ├── frontend/                          # Frontend Application Layer
-│   ├── react-app/                     # ⚛️ React 18 + React Router 6 Modular SPA
+│   ├── react-app/                     #  React 18 + React Router 6 Modular SPA
 │   │   ├── package.json               # Dependencies (React Router, Lucide, Tailwind)
 │   │   ├── vite.config.js             # Vite Configuration with API Reverse Proxy
 │   │   ├── tailwind.config.js         # KBank Emerald Theme Design Tokens
@@ -233,7 +223,7 @@ K-Sentinel-and-WealthPilot/
 
 ---
 
-## 🏆 KBTG Kampus Hackathon 2026 Team Attribution
+##  KBTG Kampus Hackathon 2026 Team Attribution
 * **Project:** K-Sentinel & WealthPilot (K PLUS for First Jobbers)
 * **Track:** Track 2 — Data Science & Intelligence
 * **Repository:** [https://github.com/svkhun/k-sentinel-wealthpilot.git](https://github.com/svkhun/k-sentinel-wealthpilot.git)\n
